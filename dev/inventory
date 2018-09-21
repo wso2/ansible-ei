@@ -1,0 +1,25 @@
+[ei]
+
+integrator_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# integrator_1 ansible_host=172.28.128.10 ansible_user=vagrant
+
+broker_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# broker_1 ansible_host=172.28.128.11 ansible_user=vagrant
+
+bps_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# bps_1 ansible_host=172.28.128.12 ansible_user=vagrant
+
+analytics_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# analytics_1 ansible_host=172.28.128.13 ansible_user=vagrant
+
+msf4j_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# msf4j_1 ansible_host=172.28.128.14 ansible_user=vagrant
+
+micro_integrator_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# micro_integrator_1 ansible_host=172.28.128.15 ansible_user=vagrant

@@ -1,0 +1,49 @@
+#----------------------------------------------------------------------------
+#  Copyright (c) 2018 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#----------------------------------------------------------------------------
+---
+  - block:
+    - name: "Copy integrator.sh"
+      template:
+        src: "carbon-home/bin/integrator.sh.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/integrator.sh"
+
+    - name: Change the owner of integrator.sh
+      file:
+        path: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/integrator.sh"
+        mode: 0755
+
+    when: "(inventory_hostname in groups['ei'])"
+    become: true
+    become_method: sudo
+    become_user: "{{ wso2_user }}"
+
+# Enable customization by uncommenting the following and adding the changes to the custom.yml
+      # - import_tasks: custom.yml
+
+  - block:
+    - name: "Copy wso2ei-integrator service file"
+      template:
+        src: wso2ei-integrator.service.j2
+        dest: /etc/systemd/system/wso2ei-integrator.service
+
+    - name: "Reload systemctl daemon"
+      command: systemctl daemon-reload
+
+    - name: "Start wso2ei-integrator as a service"
+      command: systemctl start wso2ei-integrator.service
+
+    become: true
+    become_user: root
