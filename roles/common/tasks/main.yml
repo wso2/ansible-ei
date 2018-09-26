@@ -1,0 +1,79 @@
+#----------------------------------------------------------------------------
+#  Copyright (c) 2018 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#----------------------------------------------------------------------------
+
+# Add configs for the custom files that are needed to be copied/replaced here.
+---
+  - name: Set rpm_setup_path
+    set_fact:
+      setup_path: "{{ rpm_setup_path }}"
+      java_home: '"/usr/lib64/wso2/wso2ei/6.4.0/jdk/jdk1.8.0_192"'
+    when: ansible_os_family == "RedHat"
+
+  - name: Set deb_setup_path
+    set_fact:
+      setup_path: "{{ deb_setup_path }}"
+      java_home: '"/usr/lib/wso2/wso2ei/6.4.0/jdk/jdk1.8.0_192"'
+    when: ansible_os_family == "Debian"
+
+  - block:
+    - name: Create group
+      group: name=wso2 state=present gid=802
+      become: true
+      become_method: sudo
+
+    - name: Add wso2carbon user
+      user: name="{{ wso2_user }}" shell=/bin/bash group=wso2 state=present uid=802
+      become: true
+      become_method: sudo
+
+    - name: Create WSO2 directory
+      file:
+        path: /opt/wso2
+        state: directory
+        mode: 0755
+
+    - name: Copy the Debian package of WSO2 Enterprise Integrator
+      copy:
+        src: "{{ product_package_location }}/{{ product_archive_deb }}"
+        dest: "{{ product_path }}/{{product_archive_deb }}"
+        mode: 0755
+      when: ansible_os_family == "Debian"
+
+    - name: Copy the RPM package of WSO2 Enterprise Integrator
+      copy:
+        src: "{{ product_package_location  }}/{{ product_archive_rpm  }}"
+        dest: "{{ product_path  }}/{{ product_archive_rpm  }}"
+        mode: 0755
+      when: ansible_os_family == "RedHat"
+
+    - name: Install a .deb package
+      apt:
+        deb: "{{ product_path  }}/{{ product_archive_deb  }}"
+      when: ansible_os_family == "Debian"
+
+    - name: Install a .rpm package
+      yum:
+        name: "{{ product_path  }}/{{ product_archive_rpm  }}"
+      when: ansible_os_family == "RedHat"
+
+    - name: "Copy JDBC Driver"
+      copy:
+       src: "files/{{ jdbc_driver }}"
+       dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/lib"
+
+
+    become: true
+    become_user: root

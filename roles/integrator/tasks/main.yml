@@ -1,0 +1,103 @@
+#----------------------------------------------------------------------------
+#  Copyright (c) 2018 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#----------------------------------------------------------------------------
+---
+  - block:
+    - name: "Copy integrator.sh"
+      template:
+        src: "carbon-home/bin/integrator.sh.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/integrator.sh"
+
+    - name: "Copy axis2.xml"
+      template:
+        src: "carbon-home/conf/axis2/axis2.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/axis2/axis2.xml"
+
+    - name: "Copy carbon.xml"
+      template:
+        src: "carbon-home/conf/carbon.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/carbon.xml"
+
+    - name: "Copy registry.xml"
+      template:
+        src: "carbon-home/conf/registry.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/registry.xml"
+
+    - name: "Copy user-mgt.xml"
+      template:
+        src: "carbon-home/conf/user-mgt.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/user-mgt.xml"
+
+    - name: "Copy jndi.properties"
+      template:
+        src: "carbon-home/conf/jndi.properties.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/jndi.properties.xml"
+
+    - name: "Copy synapse.properties"
+      template:
+        src: "carbon-home/conf/synapse.properties.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/synapse.properties.xml"
+
+    - name: "Copy master-datasources.xml"
+      template:
+        src: "carbon-home/conf/datasources/master-datasources.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/datasources/master-datasources.xml"
+
+    - name: "Copy catalina-server.xml"
+      template:
+        src: "carbon-home/conf/tomcat/catalina-server.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/tomcat/catalina-server.xml"
+
+    - name: "Copy MessageFlowConfigurationPublisher.xml"
+      template:
+        src: "carbon-home/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
+
+    - name: "Copy MessageFlowStatisticsPublisher.xml"
+      template:
+        src: "carbon-home/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+
+    - name: Change the owner of WSO2 directory
+      file:
+        path: "{{ setup_path }}"
+        state: directory
+        recurse: true
+        owner: "{{ wso2_user }}"
+        group: "{{ wso2_group }}"
+        mode: 0755
+
+    when: "(inventory_hostname in groups['ei'])"
+    become: true
+    become_method: sudo
+    become_user: root
+
+# Enable customization by uncommenting the following and adding the changes to the custom.yml
+      # - import_tasks: custom.yml
+
+  - block:
+    - name: "Copy wso2ei-integrator service file"
+      template:
+        src: wso2ei-integrator.service.j2
+        dest: /etc/systemd/system/wso2ei-integrator.service
+
+    - name: "Reload systemctl daemon"
+      command: systemctl daemon-reload
+
+    - name: "Start wso2ei-integrator as a service"
+      command: systemctl start wso2ei-integrator.service
+
+    become: true
+    become_user: root
