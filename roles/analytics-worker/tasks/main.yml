@@ -15,15 +15,15 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    - name: "Copy analytics-worker.sh"
+    - name: "Copy carbon.sh"
       template:
-        src: "carbon-home/bin/analytics-worker.sh.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/analytics-worker.sh"
+        src: "carbon-home/wso2/analytics/wso2/worker/bin/carbon.sh.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/wso2/worker/bin/carbon.sh"
 
-    - name: "Copy deployment.yml"
+    - name: "Copy deployment.yaml"
       template:
-        src: "carbon-home/wso2/analytics/conf/worker/deployment.yml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/conf/worker/deployment.yml.j2"
+        src: "carbon-home/wso2/analytics/conf/worker/deployment.yaml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/conf/worker/deployment.yaml.j2"
 
     - name: Change the owner of WSO2 directory
       file:

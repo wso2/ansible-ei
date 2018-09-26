@@ -15,15 +15,20 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    - name: "Copy carbon.sh"
+    - name: Copy carbon.sh
       template:
         src: "carbon-home/wso2/msf4j/bin/carbon.sh.j2"
         dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/bin/carbon.sh"
 
-    - name: Change the owner of carbon.sh
+    - name: Copy netty-transports.yml
       file:
-        path: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/bin/carbon.sh"
-        mode: 0755
+        src: "carbon-home/wso2/msf4j/conf/transports/netty-transports.yml.j2"
+        path: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/conf/transports/netty-transports.yml"
+
+    - name: Copy data-agent-config.xml.sh
+      file:
+        src: "carbon-home/wso2/msf4j/conf/data-bridge/data-agent-config.xml.j2"
+        path: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/conf/data-bridge/data-agent-config.xml"
 
     - name: Change the owner of WSO2 directory
       file:

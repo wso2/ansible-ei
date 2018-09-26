@@ -44,19 +44,19 @@
   hosts:
     - analytics_dashboard_1
   roles:
-    - analytics_dashboard
+    - analytics-dashboard
 
 - name: Apply analytics-worker configuration to analytics nodes
   hosts:
     - analytics_worker_1
   roles:
-    - analytics_worker
+    - analytics-worker
 
 - name: Apply msf4j configuration to msf4j nodes
   hosts:
-    - masf4j_1
+    - msf4j_1
   roles:
-    - analytics
+    - msf4j
 
 - name: Apply micro-integrator configuration to micro-integrator nodes
   hosts:

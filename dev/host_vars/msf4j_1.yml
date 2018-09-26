@@ -15,5 +15,14 @@
 # ----------------------------------------------------------------------------
 
 ---
+# Host name or IP address of the machine hosting this server.
+# e.g. www.wso2.org, 192.168.1.10
+# This is will become part of the End Point Reference of the services deployed on this server instance.
+hostname: 0.0.0.0
+listener_configurations_port: 9090
 
-# Add parameters for the files that are need to be parameterized based on your requirements.
+thrift_data_agents_conf_trsutstore_path: conf/data-bridge/client-truststore.jks
+thrift_data_agents_conf_trsutstore_password: wso2carbon
+
+binary_data_agents_conf_trsutstore_path: conf/data-bridge/client-truststore.jks
+binary_data_agents_conf_trsutstore_password: wso2carbon
