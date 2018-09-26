@@ -3,9 +3,9 @@ Description=WSO2 Enterprise Integrator - MSF4J
 After=network.target
 
 [Service]
-ExecStart={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/msf4j.sh start
-ExecStop={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/msf4j.sh stop
-ExecRestart={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/msf4j.sh restart
+ExecStart={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/bin/carbon.sh start
+ExecStop={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/bin/carbon.sh stop
+ExecRestart={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/bin/carbon.sh restart
 PIDFile={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2carbon.pid
 User={{ wso2_user }}
 Group={{ wso2_group }}

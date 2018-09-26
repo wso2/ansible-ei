@@ -15,14 +15,63 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    - name: "Copy micro-integrator.sh"
+    - name: "Copy wso2server.sh"
       template:
-        src: "carbon-home/bin/micro-integrator.sh.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/micro-integrator.sh"
+        src: "carbon-home/wso2/micro-integrator/bin/wso2server.sh.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/bin/wso2server.sh"
 
-    - name: Change the owner of micro-integrator.sh
+    - name: "Copy axis2.xml"
+      template:
+        src: "carbon-home/wso2/micro-integrator/conf/axis2/axis2.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/conf/axis2/axis2.xml"
+
+    - name: "Copy carbon.xml"
+      template:
+        src: "carbon-home/wso2/micro-integrator/conf/carbon.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/conf/carbon.xml"
+
+    - name: "Copy user-mgt.xml"
+      template:
+        src: "carbon-home/wso2/micro-integrator/conf/user-mgt.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/conf/user-mgt.xml"
+
+    - name: "Copy jndi.properties"
+      template:
+        src: "carbon-home/wso2/micro-integrator/conf/jndi.properties.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/conf/jndi.properties.xml"
+
+    - name: "Copy synapse.properties"
+      template:
+        src: "carbon-home/wso2/micro-integrator/conf/synapse.properties.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/conf/synapse.properties.xml"
+
+    - name: "Copy catalina-server.xml"
+      template:
+        src: "carbon-home/wso2/micro-integrator/conf/tomcat/catalina-server.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/conf/tomcat/catalina-server.xml"
+
+    - name: "Copy master-datasources.xml"
+      template:
+        src: "carbon-home/wso2/micro-integrator/conf/datasources/master-datasources.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/conf/datasources/master-datasources.xml"
+
+    - name: "Copy MessageFlowConfigurationPublisher.xml"
+      template:
+        src: "carbon-home/wso2/micro-integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
+
+    - name: "Copy MessageFlowStatisticsPublisher.xml"
+      template:
+        src: "carbon-home/wso2/micro-integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/micro-integrator/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+
+    - name: Change the owner of WSO2 directory
       file:
-        path: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/micro-integrator.sh"
+        path: "{{ setup_path }}"
+        state: directory
+        recurse: true
+        owner: "{{ wso2_user }}"
+        group: "{{ wso2_group }}"
         mode: 0755
 
     when: "(inventory_hostname in groups['ei'])"

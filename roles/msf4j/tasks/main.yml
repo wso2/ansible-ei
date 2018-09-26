@@ -15,14 +15,23 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    - name: "Copy msf4j.sh"
+    - name: "Copy carbon.sh"
       template:
-        src: "carbon-home/bin/msf4j.sh.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/msf4j.sh"
+        src: "carbon-home/wso2/msf4j/bin/carbon.sh.j2"
+        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/bin/carbon.sh"
 
-    - name: Change the owner of msf4j.sh
+    - name: Change the owner of carbon.sh
       file:
-        path: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/msf4j.sh"
+        path: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/msf4j/bin/carbon.sh"
+        mode: 0755
+
+    - name: Change the owner of WSO2 directory
+      file:
+        path: "{{ setup_path }}"
+        state: directory
+        recurse: true
+        owner: "{{ wso2_user }}"
+        group: "{{ wso2_group }}"
         mode: 0755
 
     when: "(inventory_hostname in groups['ei'])"

@@ -19,61 +19,71 @@ wso2_user: wso2carbon
 deb_setup_path: /usr/lib/wso2
 rpm_setup_path: /usr/lib64/wso2
 product_name: wso2ei
-product_version: 6.3.0
+product_version: 6.4.0
 product_path: /opt/wso2
-product_archive_deb: wso2ei-linux-installer-x64-6.3.0.deb
-product_archive_rpm: wso2ei-linux-installer-x64-6.3.0.rpm
+product_archive_deb: wso2ei-linux-installer-x64-6.4.0.deb
+product_archive_rpm: wso2ei-linux-installer-x64-6.4.0.rpm
 product_package_location: files
 jdbc_driver: mysql-connector-java-5.1.45-bin.jar
 
-worker:
-  access_credentials:
-    username: admin
-    password: admin
+analytics_dashboard_hostname: 0.0.0.0
+analytics_worker_hostname: 0.0.0.0
 
-# Data Sources Configurations
-wso2_dashboard_db:
-  url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/DASHBOARD_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
-  username: wso2carbon
-  password: wso2carbon
-  driver_class_name: org.h2.Driver
+# Rule template wise configuration for deploying business rules in analytics
+analytics_worker_ip: localhost
+analytics_worker_port: 9443
+analytics_worker_username: admin
+analytics_worker_password: admin
 
-business_rules_db:
-  url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/BUSINESS_RULES_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
-  username: wso2carbon
-  password: wso2carbon
-  driver_class_name: org.h2.Driver
+# IP address of the broker node to be used under integrator role in jndi.properties file
+broker_ip: localhost
 
-wso2_status_dashboard_db:
-  url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/wso2_status_dashboard;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
-  username: wso2carbon
-  password: wso2carbon
-  driver_class_name: org.h2.Driver
+# Datasource configurations
+wso2_dashboard_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/DASHBOARD_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+wso2_dashboard_db_username: wso2carbon
+wso2_dashboard_db_password: wso2carbon
+wso2_dashboard_db_driver_class_name: org.h2.Driver
 
-wso2_metrics_db:
-  url: jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/metrics;AUTO_SERVER=TRUE
-  username: wso2carbon
-  password: wso2carbon
-  driver_class_name: org.h2.Driver
+business_rules_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/BUSINESS_RULES_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+business_rules_db_username: wso2carbon
+business_rules_db_password: wso2carbon
+business_rules_db_driver_class_name: org.h2.Driver
 
-wso2_permissions_db:
-  url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
-  username: wso2carbon
-  password: wso2carbon
-  driver_class_name: org.h2.Driver
+wso2_status_dashboard_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/wso2_status_dashboard;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+wso2_status_dashboard_db_username: wso2carbon
+wso2_status_dashboard_db_password: wso2carbon
+wso2_status_dashboard_db_driver_class_name: org.h2.Driver
 
-message_tracing_db:
-  url: jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/MESSAGE_TRACING_DB;AUTO_SERVER=TRUE
-  username: wso2carbon
-  password: wso2carbon
-  driver_class_name: org.h2.Driver
+wso2_metrics_db_url: jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/metrics;AUTO_SERVER=TRUE
+wso2_metrics_db_username: wso2carbon
+wso2_metrics_db_password: wso2carbon
+wso2_metrics_db_driver_class_name: org.h2.Driver
 
-sp_mgt_db:
-  url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/SP_MGT_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
-  username: wso2carbon
-  password: wso2carbon
-  driver_class_name: org.h2.Driver
+wso2_permissions_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
+wso2_permissions_db_username: wso2carbon
+wso2_permissions_db_password: wso2carbon
+wso2_permissions_db_driver_class_name: org.h2.Driver
 
-  # Add any new changes you want to add for the group/profile below.
-  # If you add a new file under templates and parameterized the file, the values for those parameters should be added
-  # below.
+http_analytics_db_url: jdbc:h2:${sys:carbon.home}/wso2/worker/database/HTTP_ANALYTICS_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE;AUTO_SERVER=TRUE
+http_analytics_db_username: wso2carbon
+http_analytics_db_password: wso2carbon
+http_analytics_db_driver_class_name: org.h2.Driver
+
+message_tracing_db_url: jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/MESSAGE_TRACING_DB;AUTO_SERVER=TRUE
+message_tracing_db_username: wso2carbon
+message_tracing_db_password: wso2carbon
+message_tracing_db_driver_class_name: org.h2.Driver
+
+ei_analytics_db_url: jdbc:h2:${sys:carbon.home}/wso2/worker/database/EI_ANALYTICS;AUTO_SERVER=TRUE
+ei_analytics_db_username: wso2carbon
+ei_analytics_db_password: wso2carbon
+ei_analytics_db_driver_class_name: org.h2.Driver
+
+wso2_mb_store_db_url: jdbc:h2:repository/database/WSO2MB_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
+wso2_mb_store_db_username: wso2carbon
+wso2_mb_store_db_password: wso2carbon
+wso2_mb_store_db_driver_class_name: org.h2.Driver
+
+# Add any new changes you want to add for the group/profile below.
+# If you add a new file under templates and parameterized the file, the values for those parameters should be added
+# below.

@@ -19,13 +19,13 @@
   - name: Set rpm_setup_path
     set_fact:
       setup_path: "{{ rpm_setup_path }}"
-      java_home: '"/usr/lib64/wso2/wso2ei/6.3.0/jre/jre1.8.0_172"'
+      java_home: '"/usr/lib64/wso2/wso2ei/6.4.0/jre/jre1.8.0_172"'
     when: ansible_os_family == "RedHat"
 
   - name: Set deb_setup_path
     set_fact:
       setup_path: "{{ deb_setup_path }}"
-      java_home: '"/usr/lib/wso2/wso2ei/6.3.0/jre/jre1.8.0_172"'
+      java_home: '"/usr/lib/wso2/wso2ei/6.4.0/jre/jre1.8.0_172"'
     when: ansible_os_family == "Debian"
 
   - block:
@@ -49,14 +49,14 @@
       copy:
         src: "{{ product_package_location }}/{{ product_archive_deb }}"
         dest: "{{ product_path }}/{{product_archive_deb }}"
-        mode: u=rwx,g=rx,o=rx
+        mode: 0755
       when: ansible_os_family == "Debian"
 
     - name: Copy the RPM package of WSO2 Enterprise Integrator
       copy:
         src: "{{ product_package_location  }}/{{ product_archive_rpm  }}"
         dest: "{{ product_path  }}/{{ product_archive_rpm  }}"
-        mode: u=rw,g=r,o=r
+        mode: 0755
       when: ansible_os_family == "RedHat"
 
     - name: Install a .deb package
@@ -74,14 +74,6 @@
        src: "files/{{ jdbc_driver }}"
        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/lib"
 
-     - name: Change the owner of WSO2 directory
-       file:
-         path: "{{ setup_path }}"
-         state: directory
-         recurse: true
-         owner: "{{ wso2_user }}"
-         group: "{{ wso2_group }}"
-         mode: 0755
 
     become: true
     become_user: root

@@ -40,11 +40,17 @@
   roles:
     - bps
 
-- name: Apply analytics configuration to analytics nodes
+- name: Apply analytics-dashboard configuration to analytics nodes
   hosts:
-    - analytics_1
+    - analytics_dashboard_1
   roles:
-    - analytics
+    - analytics_dashboard
+
+- name: Apply analytics-worker configuration to analytics nodes
+  hosts:
+    - analytics_worker_1
+  roles:
+    - analytics_worker
 
 - name: Apply msf4j configuration to msf4j nodes
   hosts:

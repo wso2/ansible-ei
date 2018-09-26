@@ -17,3 +17,43 @@
 ---
 # NOTE: The parameterized values has the default values from the original pack. Please change them according to your
 # requirements. If you need to add additional configurations, please use the custom.yml under each role.
+
+# Host name or IP address of the machine hosting this server.
+# e.g. www.wso2.org, 192.168.1.10
+# This is will become part of the End Point Reference of the services deployed on this server instance.
+hostname: localhost
+# Host name to be used for the Carbon management console.
+mgt_hotname: localhost
+# This entry will set the value of the ports defined below to the define value + Offset.
+# e.g. Offset=2 and HTTPS port=9443 will set the effective HTTPS port to 9445
+ports_offset: 0
+
+# To enable http proxy port, uncommnet the following.
+# catalina_server_proxy_port_http: 80
+catalina_server_http_connector_max_threads: 250
+catalina_server_http_connector_accept_count: 200
+# To enable https proxy port, uncommnet the following.
+# catalina_server_proxy_port_https: 443
+catalina_server_https_connector_max_threads: 250
+catalina_server_https_connector_accept_count: 200
+catalina_server_https_connector_keystore_file: ${carbon.home}/repository/resources/security/wso2carbon.jks
+catalina_server_https_connector_keystore_password: wso2carbon
+
+# KeyStore which will be used for encrypting/decrypting passwords and other sensitive information.
+keystore_location: ${carbon.home}/repository/resources/security/wso2carbon.jks
+keystore_type: JKS
+keystore_password: wso2carbon
+keystore_alias: wso2carbon
+keystore_key_password: wso2carbon
+
+# The KeyStore which is used for encrypting/decrypting internal data. This block is read by Carbon Crypto Service.
+internal_keystore_location: $${carbon.home}/repository/resources/security/wso2carbon.jk
+internal_keystore_type: JKS
+internal_keystore_password: wso2carbon
+internal_keystore_alias: wso2carbon
+internal_keystore_key_password: wso2carbon
+
+# System wide trust-store which is used to maintain the certificates of all the trusted parties.
+truststore_location: ${carbon.home}/repository/resources/security/client-truststore.jks
+truststore_type: JKS
+truststore_password: wso2carbon
