@@ -12,7 +12,167 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 ## Directory Structure
 ```
-
+.
+├── dev
+│   ├── group_vars
+│   │   └── ei.yml
+│   ├── host_vars
+│   │   ├── analytics_dashboard_1.yml
+│   │   ├── analytics_worker_1.yml
+│   │   ├── bps_1.yml
+│   │   ├── broker_1.yml
+│   │   ├── integrator_1.yml
+│   │   ├── micro_integrator_1.yml
+│   │   └── msf4j_1.yml
+│   └── inventory
+├── docs
+│   └── images
+├── files
+│   └── mysql-connector-java-5.1.45-bin.jar
+├── issue_template.md
+├── LICENSE
+├── pull_request_template.md
+├── README.md
+├── roles
+│   ├── analytics-dashboard
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── bin
+│   │       │   │   └── analytics-dashboard.sh.j2
+│   │       │   └── wso2
+│   │       │       └── analytics
+│   │       │           └── conf
+│   │       │               └── dashboard
+│   │       │                   └── deployment.yaml
+│   │       └── wso2ei-analytics-dashboard.service.j2
+│   ├── analytics-worker
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── bin
+│   │       │   │   └── analytics-worker.sh.j2
+│   │       │   └── wso2
+│   │       │       └── analytics
+│   │       │           └── conf
+│   │       │               └── worker
+│   │       │                   └── deployment.yaml
+│   │       └── wso2ei-analytics-worker.service.j2
+│   ├── bps
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   └── wso2
+│   │       │       └── business-process
+│   │       │           ├── bin
+│   │       │           │   └── wso2server.sh
+│   │       │           └── conf
+│   │       │               ├── axis2
+│   │       │               │   └── axis2.xml.j2
+│   │       │               ├── carbon.xml.j2
+│   │       │               ├── datasources
+│   │       │               │   ├── activiti-datasources.xml.j2
+│   │       │               │   ├── bps-datasources.xml.j2
+│   │       │               │   └── master-datasources.xml.j2
+│   │       │               ├── registry.xml.j2
+│   │       │               └── user-mgt.xml.j2
+│   │       └── wso2ei-bps.service.j2
+│   ├── broker
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   └── wso2
+│   │       │       └── broker
+│   │       │           ├── bin
+│   │       │           │   └── wso2server.sh
+│   │       │           └── conf
+│   │       │               ├── axis2
+│   │       │               │   └── axis2.xml.j2
+│   │       │               ├── carbon.xml.j2
+│   │       │               ├── datasources
+│   │       │               │   └── master-datasources.xml.j2
+│   │       │               ├── registry.xml.j2
+│   │       │               └── user-mgt.xml.j2
+│   │       └── wso2ei-broker.service.j2
+│   ├── common
+│   │   └── tasks
+│   │       ├── custom.yml
+│   │       └── main.yml
+│   ├── integrator
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── bin
+│   │       │   │   └── integrator.sh.j2
+│   │       │   ├── conf
+│   │       │   │   ├── axis2
+│   │       │   │   │   └── axis2.xml.j2
+│   │       │   │   ├── carbon.xml.j2
+│   │       │   │   ├── datasources
+│   │       │   │   │   └── master-datasources.xml.j2
+│   │       │   │   ├── jndi.properties.j2
+│   │       │   │   ├── registry.xml.j2
+│   │       │   │   ├── synapse.properties.j2
+│   │       │   │   ├── tomcat
+│   │       │   │   │   └── catalina-server.xml.j2
+│   │       │   │   └── user-mgt.xml.j2
+│   │       │   └── repository
+│   │       │       └── deployment
+│   │       │           └── server
+│   │       │               └── eventpublishers
+│   │       │                   ├── MessageFlowConfigurationPublisher.xml.j2
+│   │       │                   └── MessageFlowStatisticsPublisher.xml.j2
+│   │       └── wso2ei-integrator.service.j2
+│   ├── micro_integrator
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   └── wso2
+│   │       │       └── micro-integrator
+│   │       │           ├── bin
+│   │       │           │   └── wso2server.sh.j2
+│   │       │           ├── conf
+│   │       │           │   ├── axis2
+│   │       │           │   │   └── axis2.xml.j2
+│   │       │           │   ├── carbon.xml.j2
+│   │       │           │   ├── datasources
+│   │       │           │   │   └── master-datasources.xml.j2
+│   │       │           │   ├── jndi.properties.j2
+│   │       │           │   ├── synapse.properties.j2
+│   │       │           │   ├── tomcat
+│   │       │           │   │   └── catalina-server.xml.j2
+│   │       │           │   └── user-mgt.xml.j2
+│   │       │           └── repository
+│   │       │               └── deployment
+│   │       │                   └── server
+│   │       │                       └── eventpublishers
+│   │       │                           ├── MessageFlowConfigurationPublisher.xml
+│   │       │                           └── MessageFlowStatisticsPublisher.xml
+│   │       └── wso2ei-micro-integrator.service.j2
+│   └── msf4j
+│       ├── tasks
+│       │   ├── custom.yml
+│       │   └── main.yml
+│       └── templates
+│           ├── carbon-home
+│           │   └── wso2
+│           │       └── msf4j
+│           │           └── bin
+│           │               └── carbon.sh.j2
+│           └── wso2ei-msf4j.service.j2
+└── site.yml
 ```
 
 ## Packs to be Copied
