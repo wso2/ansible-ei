@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventPublisher name="MessageFlowConfigurationPublisher"
+  statistics="disable" trace="disable" xmlns="http://wso2.org/carbon/eventpublisher">
+  <from streamName="org.wso2.esb.analytics.stream.ConfigEntry" version="1.0.0"/>
+  <mapping customMapping="disable" type="wso2event"/>
+  <to eventAdapterType="wso2event">
+    <property name="username">admin</property>
+    <property name="protocol">thrift</property>
+    <property name="publishingMode">blocking</property>
+    <property name="publishTimeout">0</property>
+    <property name="receiverURL">tcp://localhost:7612</property>
+    <property encrypted="true" name="password">eyJjIjoiVzJSQmtMNDRKV1NjNlJxeXVtYXRHL3VvUCttL01KdjBwN1p6Q01vV1FQdHlhQlNMUFV6Q2s4eTM2KzhTYThMbFR2SFdKZ1NML3c2OUFPbWlMY0QwSmdNSGhPRGNJOWRQWHQwUU1iQkNhdUJ1ekExeHlNZEJ0bGJseEZJOHlycXN4cWVLd1RpSkhzRTIydEdxZ0dKUHBJQXVId3lLbXF1UEpXY2o3a1Q0L3EzSHlDUkZjc2ZXUnVwVkFyV3A4SkJ5VVpSY2Z3QTBhajcrTzFLY25oS0dKM0ZiVDlua0N5RU9vbGVHL2o4R1ZiYUF6MXlaTDBQc2Q0cnh5UWdNbWpuMVFSZDdOVFBiRXpQVklNYW1lbE92OUNhL3hXL0J5ZmxlbTJoZWxWcHpkZlgwQjI3M0JmVHF5b1lmbEt5emVCNUYwS01WNlh0YnM0TGFaZHVhdFZkTlh3XHUwMDNkXHUwMDNkIiwidCI6IlJTQS9FQ0IvT0FFUHdpdGhTSEExYW5kTUdGMVBhZGRpbmciLCJ0cCI6IjUwMUZDMTQzMkQ4NzE1NURDNDMxMzgyQUVCODQzRUQ1NThBRDYxQjEiLCJ0cGQiOiJTSEEtMSJ9</property>
+  </to>
+</eventPublisher>
