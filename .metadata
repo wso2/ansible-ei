@@ -1,0 +1,60 @@
+# ----------------------------------------------------------------------
+# Copyright 2019 WSO2, Inc. (http://wso2.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+# ----------------------------------------------------------------------
+
+# command line arguments
+params:
+    wso2ei: wso2ei-6.5.0
+    existing_version: 6.4.0
+    new_version: 6.5.0
+    exiting_wso2ei_package_name: WSO2 Enterprise Integrator 6.4.0 package
+    new_wso2ei_package_name: WSO2 Enterprise Integrator 6.5.0 package
+    existing_wso2ei_installer_deb: wso2ei-linux-installer-x64-6.4.0.deb
+    new_wso2ei_installer_deb: wso2ei-linux-installer-x64-6.5.0.deb
+    existing_wso2ei_installer_rpm: wso2ei-linux-installer-x64-6.4.0.rpm
+    new_wso2ei_installer_rpm: wso2ei-linux-installer-x64-6.5.0.rpm
+
+# files based configurations
+files:
+  - file_path: "README.md"
+    relative_path: ~
+    file_type: "txt"
+    configurations:
+      - operation: "replace"
+        current_value: "{$arg.exiting_wso2ei_package_name}"
+        new_value: "{$arg.new_wso2ei_package_name}"
+  - file_path: "dev/group_vars/ei.yml"
+    relative_path: ~
+    file_type: "txt"
+    configurations:
+      - operation: "replace"
+        current_value: "product_version: {$arg.existing_version}"
+        new_value: "product_version: {$arg.new_version}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2ei_installer_deb}"
+        new_value: "{$arg.new_wso2ei_installer_deb}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2ei_installer_rpm}"
+        new_value: "{$arg.new_wso2ei_installer_rpm}"
+
+# Analytics-Dashboard Profile
+
+# Analytics-Worker Profile
+
+# BPS Profile
+
+# Integrator Profile
+
+# Micro-Integrator Profile
