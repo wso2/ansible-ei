@@ -179,7 +179,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 Copy the following files to `files` directory.
 
-1. [WSO2 Enterprise Integrator 6.4.0 package](https://wso2.com/integration/install/)
+1. [WSO2 Enterprise Integrator 6.5.0 package](https://wso2.com/integration/install/)
 2. [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/5.1.html)
 
 ## Running WSO2 Enterprise Integrator Ansible scripts

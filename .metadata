@@ -413,14 +413,10 @@ files:
     configurations:
       - operation: add
         xpath: "."
-        value:
-          |
-          <HostName>{{ hostname }}</HostName>
+        value: "<HostName>{{ hostname }}</HostName>"
       - operation: add
         xpath: "."
-        value:
-          |
-          <MgtHostName>{{ mgt_hostname }}</MgtHostName>
+        value:  "<MgtHostName>{{ mgt_hostname }}</MgtHostName>"
       - operation: replace
         xpath: "Ports/Offset"
         value: "{{ ports_offset }}"  
