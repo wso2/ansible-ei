@@ -28,7 +28,7 @@
 
 synapse.sal.endpoints.sesssion.timeout.default=600000
 synapse.global_timeout_interval=120000
-#In memory statistics cleaning state
+#In memory statistics cleaning state 
 statistics.clean.enable=true
 statistics.clean.interval=1000
 
@@ -60,14 +60,19 @@ synapse.debugger.port.command=9005
 synapse.debugger.port.event=9006
 
 # Configuration to enable mediation flow analytics
-mediation.flow.statistics.enable=true
-mediation.flow.statistics.tracer.collect.payloads=true
-mediation.flow.statistics.tracer.collect.properties=true
+mediation.flow.statistics.enable={{ mediation_flow_statistics_enabled }}
+mediation.flow.statistics.tracer.collect.payloads={{ mediation_flow_statistics_tracer_collect_payloads_enabled }}
+mediation.flow.statistics.tracer.collect.properties={{ mediation_flow_statistics_tracer_collect_properties_enabled }}
 mediation.flow.statistics.event.consume.interval=1000
 mediation.flow.statistics.event.clean.interval=15000
 
 # Configuration to enable statistics globally irrespective of the individual artifact level setting
-mediation.flow.statistics.collect.all=true
+mediation.flow.statistics.collect.all={{ mediation_flow_statistics_collect_all_enabled }}
 
 # Script Mediator Pool (impatcts only external scripts)
 #synapse.script.mediator.pool.size=15
+
+# Internal APIs
+internal.http.api.enabled=true
+internal.http.api.port=9191
+internal.https.api.port=9154

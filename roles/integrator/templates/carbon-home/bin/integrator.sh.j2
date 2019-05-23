@@ -33,8 +33,8 @@
 # OS specific support.  $var _must_ be set to either true or false.
 #ulimit -n 100000
 
-export JAVA_HOME={{ java_home }};
 cygwin=false;
+export JAVA_HOME={{ java_home }};
 darwin=false;
 os400=false;
 mingw=false;
@@ -155,8 +155,6 @@ do
           CMD="version"
     elif [ "$c" = "--restart" ] || [ "$c" = "-restart" ] || [ "$c" = "restart" ]; then
           CMD="restart"
-    elif [ "$c" = "--test" ] || [ "$c" = "-test" ] || [ "$c" = "test" ]; then
-          CMD="test"
     else
         args="$args $c"
     fi
@@ -203,8 +201,7 @@ elif [ "$CMD" = "restart" ]; then
 # using nohup sh to avoid erros in solaris OS.TODO
   nohup sh "$CARBON_HOME"/bin/integrator.sh $args > /dev/null 2>&1 &
   exit 0
-elif [ "$CMD" = "test" ]; then
-    JAVACMD="exec "$JAVACMD""
+
 elif [ "$CMD" = "version" ]; then
   cat "$CARBON_HOME"/bin/version.txt
   cat "$CARBON_HOME"/bin/wso2carbon-version.txt
@@ -324,6 +321,7 @@ do
     -Dcom.ibm.cacheLocalHost=true \
     -DworkerNode=false \
     -Dorg.wso2.ignoreHostnameVerification=true \
+    -Dorg.apache.activemq.SERIALIZABLE_PACKAGES="*" \
     org.wso2.carbon.bootstrap.Bootstrap $*
     status=$?
 done
