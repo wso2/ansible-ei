@@ -460,7 +460,6 @@ files:
       - operation: replace_line
         current_value: "<!--MgtHostName>mgt.wso2.org</MgtHostName-->"
         new_value: "<MgtHostName>{{ mgt_hostname }}</MgtHostName>"
-
 # Integrator Profile
   - file_path: "roles/integrator/templates/carbon-home/bin/integrator.sh.j2"
     relative_path: "{$arg.wso2ei}/bin/integrator.sh"
