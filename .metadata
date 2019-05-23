@@ -35,6 +35,19 @@ files:
       - operation: "replace"
         current_value: "{$arg.exiting_wso2ei_package_name}"
         new_value: "{$arg.new_wso2ei_package_name}"
+  - file_path: "dev/group_vars/ei.yml"
+    relative_path: ~
+    file_type: "txt"
+    configurations:
+      - operation: "replace"
+        current_value: "product_version: {$arg.existing_version}"
+        new_value: "product_version: {$arg.new_version}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2ei_installer_deb}"
+        new_value: "{$arg.new_wso2ei_installer_deb}"
+      - operation: "replace"
+        current_value: "{$arg.existing_wso2ei_installer_rpm}"
+        new_value: "{$arg.new_wso2ei_installer_rpm}"
 # Analytics-Dashboard Profile
   - file_path: roles/analytics-dashboard/templates/carbon-home/wso2/analytics/wso2/dashboard/bin/carbon.sh.j2
     relative_path: "{$arg.wso2ei}/wso2/analytics/wso2/dashboard/bin/carbon.sh"
@@ -368,5 +381,126 @@ files:
 # BPS Profile
 
 # Integrator Profile
-
+  - file_path: "roles/integrator/templates/carbon-home/bin/integrator.sh.j2"
+    relative_path: "{$arg.wso2ei}/bin/integrator.sh"
+    file_type: sh
+    configurations:
+      - operation: add
+        xpath: "cygwin=false;"
+        value: "export JAVA_HOME={{ java_home }};\n"
+  - file_path: "roles/integrator/templates/carbon-home/conf/tomcat/catalina-server.xml.j2"
+    relative_path: "{$arg.wso2ei}/conf/tomcat/catalina-server.xml"
+    file_type: xml
+    configurations:
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9763\"]"
+        value: "maxThreads={{ catalina_server_connector_http_max_threads }}"
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9763\"]"
+        value: "acceptCount={{ catalina_server_connector_http_accept_count }}"
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9443\"]"
+        value: "maxThreads={{ catalina_server_connector_https_max_threads }}"
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9443\"]"
+        value: "acceptCount={{ catalina_server_connector_https_accept_count }}"
+      - operation: attribute
+        xpath: "Server/Service/Connector[@port=\"9443\"]"
+        value: "acceptCount={{ catalina_server_connector_https_accept_count }}"
+  - file_path: "roles/integrator/templates/carbon-home/conf/carbon.xml.j2"
+    relative_path: "{$arg.wso2ei}/conf/carbon.xml"
+    file_type: xml
+    configurations:
+      - operation: add
+        xpath: "."
+        value:
+          |
+          <HostName>{{ hostname }}</HostName>
+      - operation: add
+        xpath: "."
+        value:
+          |
+          <MgtHostName>{{ mgt_hostname }}</MgtHostName>
+      - operation: replace
+        xpath: "Ports/Offset"
+        value: "{{ ports_offset }}"  
+      - operation: replace
+        xpath: "Security/KeyStore/Location"
+        value: "{{ keystore_location }}" 
+      - operation: replace
+        xpath: "Security/KeyStore/Type"
+        value: "{{ keystore_type }}"                 
+      - operation: replace
+        xpath: "Security/KeyStore/Password"
+        value: "{{ keystore_password }}"         
+      - operation: replace
+        xpath: "Security/KeyStore/KeyAlias"
+        value: "{{ keystore_alias }}"   
+      - operation: replace
+        xpath: "Security/KeyStore/KeyPassword"
+        value: "{{ keystore_key_password }}"
+      - operation: replace
+        xpath: "Security/InternalKeyStore/Location"
+        value: "{{ internal_keystore_location }}" 
+      - operation: replace
+        xpath: "Security/InternalKeyStore/Type"
+        value: "{{ internal_keystore_type }}"                 
+      - operation: replace
+        xpath: "Security/InternalKeyStore/Password"
+        value: "{{ internal_keystore_password }}"         
+      - operation: replace
+        xpath: "Security/InternalKeyStore/KeyAlias"
+        value: "{{ internal_keystore_alias }}"   
+      - operation: replace
+        xpath: "Security/InternalKeyStore/KeyPassword"
+        value: "{{ internal_keystore_key_password }}"                
+      - operation: replace
+        xpath: "Security/TrustStore/Location"
+        value: "{{ truststore_location }}" 
+      - operation: replace
+        xpath: "Security/TrustStore/Type"
+        value: "{{ truststore_type }}" 
+      - operation: replace
+        xpath: "Security/TrustStore/Password"
+        value: "{{ truststore_password }}" 
+  - file_path: "roles/integrator/templates/carbon-home/conf/jndi.properties.j2"
+    relative_path: "{$arg.wso2ei}/conf/jndi.properties"
+    file_type: txt
+    configurations:
+      - operation: replace_line
+        current_value: "connectionfactory.QueueConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
+        new_value: "connectionfactory.QueueConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://{{ broker_ip }}:5675'"
+      - operation: replace_line
+        current_value: "connectionfactory.TopicConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://localhost:5675'"
+        new_value: "connectionfactory.TopicConnectionFactory = amqp://admin:admin@clientID/carbon?brokerlist='tcp://{{ broker_ip }}:5675'"
+  - file_path: roles/integrator/templates/carbon-home/conf/synapse.properties.j2
+    relative_path: "{$arg.wso2ei}/conf/synapse.properties"
+    file_type: txt
+    configurations:
+      - operation: replace
+        current_value: "mediation.flow.statistics.enable=false"
+        new_value: "mediation.flow.statistics.enable={{ mediation_flow_statistics_enabled }}"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.payloads=false"
+        new_value: "mediation.flow.statistics.tracer.collect.payloads={{ mediation_flow_statistics_tracer_collect_payloads_enabled }}"
+      - operation: replace
+        current_value: "mediation.flow.statistics.tracer.collect.properties=false"
+        new_value: "mediation.flow.statistics.tracer.collect.properties={{ mediation_flow_statistics_tracer_collect_properties_enabled }}"
+      - operation: replace
+        current_value: "mediation.flow.statistics.collect.all=false"
+        new_value: "mediation.flow.statistics.collect.all={{ mediation_flow_statistics_collect_all_enabled }}"
+  - file_path: "roles/integrator/templates/carbon-home/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml.j2"
+    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "to/property[@name=\"receiverURL\"]"
+        value: "tcp://{{ analytics_worker_ip }}:7612" 
+  - file_path: "roles/integrator/templates/carbon-home/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml.j2"
+    relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "to/property[@name=\"receiverURL\"]"
+        value: "tcp://{{ analytics_worker_ip }}:7612" 
 # Micro-Integrator Profile
