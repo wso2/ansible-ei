@@ -380,6 +380,87 @@ files:
         value: "{{ cluster_config_enabled }}"
 # BPS Profile
 
+# Broker Profile
+  - file_path: "roles/broker/templates/carbon-home/bin/integrator.sh.j2"
+    relative_path: "{$arg.wso2ei}/bin/broker.sh"
+    file_type: sh
+    configurations:
+      - operation: add
+        xpath: "cygwin=false;"
+        value: "export JAVA_HOME={{ java_home }};\n"
+  - file_path: "roles/broker/templates/carbon-home/wso2/broker/conf/datasources/master-datasources.xml.j2"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/datasources/master-datasources.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "datasources/datasource[@name=\"WSO2_MB_STORE_DB\"]/definition/configuration/url"
+        value: "{{ wso2_mb_store_db_url }}"
+      - operation: replace
+        xpath: "datasources/datasource[@name=\"WSO2_MB_STORE_DB\"]/definition/configuration/username"
+        value: "{{ wso2_mb_store_db_username }}"
+      - operation: replace
+        xpath: "datasources/datasource[@name=\"WSO2_MB_STORE_DB\"]/definition/configuration/password"
+        value: "{{ wso2_mb_store_db_password }}"
+      - operation: replace
+        xpath: "datasources/datasource[@name=\"WSO2_MB_STORE_DB\"]/definition/configuration/driverClassName"
+        value: "{{ wso2_mb_store_db_driver_class_name }}"
+  - file_path: "roles/broker/templates/carbon-home/wso2/broker/conf/carbon.xml.j2"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/carbon.xml"
+    file_type: xml
+    configurations:
+      - operation: replace
+        xpath: "Ports/Offset"
+        value: "{{ ports_offset }}"  
+      - operation: replace
+        xpath: "Security/KeyStore/Location"
+        value: "{{ keystore_location }}" 
+      - operation: replace
+        xpath: "Security/KeyStore/Type"
+        value: "{{ keystore_type }}"                 
+      - operation: replace
+        xpath: "Security/KeyStore/Password"
+        value: "{{ keystore_password }}"         
+      - operation: replace
+        xpath: "Security/KeyStore/KeyAlias"
+        value: "{{ keystore_alias }}"   
+      - operation: replace
+        xpath: "Security/KeyStore/KeyPassword"
+        value: "{{ keystore_key_password }}"
+      - operation: replace
+        xpath: "Security/InternalKeyStore/Location"
+        value: "{{ internal_keystore_location }}" 
+      - operation: replace
+        xpath: "Security/InternalKeyStore/Type"
+        value: "{{ internal_keystore_type }}"                 
+      - operation: replace
+        xpath: "Security/InternalKeyStore/Password"
+        value: "{{ internal_keystore_password }}"         
+      - operation: replace
+        xpath: "Security/InternalKeyStore/KeyAlias"
+        value: "{{ internal_keystore_alias }}"   
+      - operation: replace
+        xpath: "Security/InternalKeyStore/KeyPassword"
+        value: "{{ internal_keystore_key_password }}"                
+      - operation: replace
+        xpath: "Security/TrustStore/Location"
+        value: "{{ truststore_location }}" 
+      - operation: replace
+        xpath: "Security/TrustStore/Type"
+        value: "{{ truststore_type }}" 
+      - operation: replace
+        xpath: "Security/TrustStore/Password"
+        value: "{{ truststore_password }}"
+  - file_path: "roles/broker/templates/carbon-home/wso2/broker/conf/carbon.xml.j2"
+    relative_path: "{$arg.wso2ei}/wso2/broker/conf/carbon.xml"
+    file_type: txt
+    configurations:
+      - operation: replace_line
+        current_value: "<!--HostName>www.wso2.org</HostName-->"
+        new_value: "<HostName>{{ hostname }}</HostName>"
+      - operation: replace_line
+        current_value: "<!--MgtHostName>mgt.wso2.org</MgtHostName-->"
+        new_value: "<MgtHostName>{{ mgt_hostname }}</MgtHostName>"
+
 # Integrator Profile
   - file_path: "roles/integrator/templates/carbon-home/bin/integrator.sh.j2"
     relative_path: "{$arg.wso2ei}/bin/integrator.sh"
