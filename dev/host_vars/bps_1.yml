@@ -36,7 +36,7 @@ keystore_alias: wso2carbon
 keystore_key_password: wso2carbon
 
 # The KeyStore which is used for encrypting/decrypting internal data. This block is read by Carbon Crypto Service.
-internal_keystore_location: $${carbon.home}/repository/resources/security/wso2carbon.jk
+internal_keystore_location: ${carbon.home}/repository/resources/security/wso2carbon.jks
 internal_keystore_type: JKS
 internal_keystore_password: wso2carbon
 internal_keystore_alias: wso2carbon
