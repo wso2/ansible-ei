@@ -22,7 +22,6 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   │   ├── bps_1.yml
 │   │   ├── broker_1.yml
 │   │   ├── integrator_1.yml
-│   │   ├── micro_integrator_1.yml
 │   │   └── msf4j_1.yml
 │   └── inventory
 ├── docs
@@ -133,34 +132,6 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   │       │                   ├── MessageFlowConfigurationPublisher.xml.j2
 │   │       │                   └── MessageFlowStatisticsPublisher.xml.j2
 │   │       └── wso2ei-integrator.service.j2
-│   ├── micro_integrator
-│   │   ├── tasks
-│   │   │   ├── custom.yml
-│   │   │   └── main.yml
-│   │   └── templates
-│   │       ├── carbon-home
-│   │       │   └── wso2
-│   │       │       └── micro-integrator
-│   │       │           ├── bin
-│   │       │           │   └── wso2server.sh.j2
-│   │       │           ├── conf
-│   │       │           │   ├── axis2
-│   │       │           │   │   └── axis2.xml.j2
-│   │       │           │   ├── carbon.xml.j2
-│   │       │           │   ├── datasources
-│   │       │           │   │   └── master-datasources.xml.j2
-│   │       │           │   ├── jndi.properties.j2
-│   │       │           │   ├── synapse.properties.j2
-│   │       │           │   ├── tomcat
-│   │       │           │   │   └── catalina-server.xml.j2
-│   │       │           │   └── user-mgt.xml.j2
-│   │       │           └── repository
-│   │       │               └── deployment
-│   │       │                   └── server
-│   │       │                       └── eventpublishers
-│   │       │                           ├── MessageFlowConfigurationPublisher.xml
-│   │       │                           └── MessageFlowStatisticsPublisher.xml
-│   │       └── wso2ei-micro-integrator.service.j2
 │   └── msf4j
 │       ├── tasks
 │       │   ├── custom.yml

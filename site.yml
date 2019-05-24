@@ -57,9 +57,3 @@
     - msf4j_1
   roles:
     - msf4j
-
-- name: Apply micro-integrator configuration to micro-integrator nodes
-  hosts:
-    - micro_integrator_1
-  roles:
-    - micro_integrator
