@@ -644,4 +644,3 @@ files:
       - operation: replace
         xpath: "to/property[@name=\"receiverURL\"]"
         value: "tcp://{{ analytics_worker_ip }}:7612"
-# Micro-Integrator Profile
