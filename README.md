@@ -105,44 +105,33 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   │   └── tasks
 │   │       ├── custom.yml
 │   │       └── main.yml
-│   ├── integrator
-│   │   ├── tasks
-│   │   │   ├── custom.yml
-│   │   │   └── main.yml
-│   │   └── templates
-│   │       ├── carbon-home
-│   │       │   ├── bin
-│   │       │   │   └── integrator.sh.j2
-│   │       │   ├── conf
-│   │       │   │   ├── axis2
-│   │       │   │   │   └── axis2.xml.j2
-│   │       │   │   ├── carbon.xml.j2
-│   │       │   │   ├── datasources
-│   │       │   │   │   └── master-datasources.xml.j2
-│   │       │   │   ├── jndi.properties.j2
-│   │       │   │   ├── registry.xml.j2
-│   │       │   │   ├── synapse.properties.j2
-│   │       │   │   ├── tomcat
-│   │       │   │   │   └── catalina-server.xml.j2
-│   │       │   │   └── user-mgt.xml.j2
-│   │       │   └── repository
-│   │       │       └── deployment
-│   │       │           └── server
-│   │       │               └── eventpublishers
-│   │       │                   ├── MessageFlowConfigurationPublisher.xml.j2
-│   │       │                   └── MessageFlowStatisticsPublisher.xml.j2
-│   │       └── wso2ei-integrator.service.j2
-│   └── msf4j
-│       ├── tasks
-│       │   ├── custom.yml
-│       │   └── main.yml
-│       └── templates
-│           ├── carbon-home
-│           │   └── wso2
-│           │       └── msf4j
-│           │           └── bin
-│           │               └── carbon.sh.j2
-│           └── wso2ei-msf4j.service.j2
+│   └── integrator
+│       ├── tasks
+│       │   ├── custom.yml
+│       │   └── main.yml
+│       └── templates
+│           ├── carbon-home
+│           │   ├── bin
+│           │   │   └── integrator.sh.j2
+│           │   ├── conf
+│           │   │   ├── axis2
+│           │   │   │   └── axis2.xml.j2
+│           │   │   ├── carbon.xml.j2
+│           │   │   ├── datasources
+│           │   │   │   └── master-datasources.xml.j2
+│           │   │   ├── jndi.properties.j2
+│           │   │   ├── registry.xml.j2
+│           │   │   ├── synapse.properties.j2
+│           │   │   ├── tomcat
+│           │   │   │   └── catalina-server.xml.j2
+│           │   │   └── user-mgt.xml.j2
+│           │   └── repository
+│           │       └── deployment
+│           │           └── server
+│           │               └── eventpublishers
+│           │                   ├── MessageFlowConfigurationPublisher.xml.j2
+│           │                   └── MessageFlowStatisticsPublisher.xml.j2
+│           └── wso2ei-integrator.service.j2
 └── site.yml
 ```
 
