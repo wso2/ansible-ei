@@ -28,5 +28,7 @@ hs_err_pid*
 files/*
 !files/.gitkeep
 
-# Auto-generated .retry files
+# Auto-generated files
 *.retry
+.DS_Store
+.idea
