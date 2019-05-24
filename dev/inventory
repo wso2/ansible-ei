@@ -23,7 +23,3 @@ analytics_worker_1 ansible_host=[ip_address] ansible_user=[ssh_user]
 msf4j_1 ansible_host=[ip_address] ansible_user=[ssh_user]
 # Example
 # msf4j_1 ansible_host=172.28.128.14 ansible_user=vagrant
-
-micro_integrator_1 ansible_host=[ip_address] ansible_user=[ssh_user]
-# Example
-# micro_integrator_1 ansible_host=172.28.128.15 ansible_user=vagrant
