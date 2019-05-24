@@ -379,6 +379,71 @@ files:
         xpath: "cluster.config/enabled"
         value: "{{ cluster_config_enabled }}"
 # BPS Profile
+  - file_path: roles/bps/templates/carbon-home/wso2/business-process/bin/wso2server.sh.j2
+    relative_path: "{$arg.wso2ei}/wso2/business-process/bin/wso2server.sh"
+    file_type: sh
+    configurations:
+      - operation: "add"
+        xpath: "cygwin=false;"
+        value: "export JAVA_HOME={{ java_home }}; \n"
+  - file_path: roles/bps/templates/carbon-home/wso2/business-process/conf/carbon.xml.j2
+    relative_path: "{$arg.wso2ei}/wso2/business-process/conf/carbon.xml"
+    file_type: xml
+    configurations:
+      - operation: "replace"
+        xpath: "HostName"
+        value: "{{ hostname }}"
+      - operation: "uncomment"
+        xpath: "MgtHostName"
+      - operation: "replace"
+        xpath: "MgtHostName"
+        value: "{{ mgt_hotname }}"
+      - operation: "replace"
+        xpath: "Ports/Offset"
+        value: "{{ ports_offset }}"
+      # KeyStore configurations
+      - operation: "replace"
+        xpath: "Security/KeyStore/Location"
+        value: "{{ keystore_location }}"
+      - operation: "replace"
+        xpath: "Security/KeyStore/Type"
+        value: "{{ keystore_type }}"
+      - operation: "replace"
+        xpath: "Security/KeyStore/Password"
+        value: "{{ keystore_password }}"
+      - operation: "replace"
+        xpath: "Security/KeyStore/KeyAlias"
+        value: "{{ keystore_alias }}"
+      - operation: "replace"
+        xpath: "Security/KeyStore/KeyPassword"
+        value: "{{ keystore_key_password }}"
+      # Internal KeyStore configurations
+      - operation: "replace"
+        xpath: "Security/InternalKeyStore/Location"
+        value: "{{ internal_keystore_location }}"
+      - operation: "replace"
+        xpath: "Security/InternalKeyStore/Type"
+        value: "{{ internal_keystore_type }}"
+      - operation: "replace"
+        xpath: "Security/InternalKeyStore/Password"
+        value: "{{ internal_keystore_password }}"
+      - operation: "replace"
+        xpath: "Security/InternalKeyStore/KeyAlias"
+        value: "{{ internal_keystore_alias }}"
+      - operation: "replace"
+        xpath: "Security/InternalKeyStore/KeyPassword"
+        value: "{{ internal_keystore_key_password }}"
+      #TrustStore configurations
+      - operation: "replace"
+        xpath: "Security/TrustStore/Location"
+        value: "{{ truststore_location }}"
+      - operation: "replace"
+        xpath: "Security/TrustStore/Type"
+        value: "{{ truststore_type }}"
+      - operation: "replace"
+        xpath: "Security/TrustStore/Password"
+        value: "{{ truststore_password }}"
+
 
 # Broker Profile
   - file_path: "roles/broker/templates/carbon-home/bin/integrator.sh.j2"
@@ -410,43 +475,43 @@ files:
     configurations:
       - operation: replace
         xpath: "Ports/Offset"
-        value: "{{ ports_offset }}"  
+        value: "{{ ports_offset }}"
       - operation: replace
         xpath: "Security/KeyStore/Location"
-        value: "{{ keystore_location }}" 
+        value: "{{ keystore_location }}"
       - operation: replace
         xpath: "Security/KeyStore/Type"
-        value: "{{ keystore_type }}"                 
+        value: "{{ keystore_type }}"
       - operation: replace
         xpath: "Security/KeyStore/Password"
-        value: "{{ keystore_password }}"         
+        value: "{{ keystore_password }}"
       - operation: replace
         xpath: "Security/KeyStore/KeyAlias"
-        value: "{{ keystore_alias }}"   
+        value: "{{ keystore_alias }}"
       - operation: replace
         xpath: "Security/KeyStore/KeyPassword"
         value: "{{ keystore_key_password }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/Location"
-        value: "{{ internal_keystore_location }}" 
+        value: "{{ internal_keystore_location }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/Type"
-        value: "{{ internal_keystore_type }}"                 
+        value: "{{ internal_keystore_type }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/Password"
-        value: "{{ internal_keystore_password }}"         
+        value: "{{ internal_keystore_password }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/KeyAlias"
-        value: "{{ internal_keystore_alias }}"   
+        value: "{{ internal_keystore_alias }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/KeyPassword"
-        value: "{{ internal_keystore_key_password }}"                
+        value: "{{ internal_keystore_key_password }}"
       - operation: replace
         xpath: "Security/TrustStore/Location"
-        value: "{{ truststore_location }}" 
+        value: "{{ truststore_location }}"
       - operation: replace
         xpath: "Security/TrustStore/Type"
-        value: "{{ truststore_type }}" 
+        value: "{{ truststore_type }}"
       - operation: replace
         xpath: "Security/TrustStore/Password"
         value: "{{ truststore_password }}"
@@ -499,46 +564,46 @@ files:
         value:  "<MgtHostName>{{ mgt_hostname }}</MgtHostName>"
       - operation: replace
         xpath: "Ports/Offset"
-        value: "{{ ports_offset }}"  
+        value: "{{ ports_offset }}"
       - operation: replace
         xpath: "Security/KeyStore/Location"
-        value: "{{ keystore_location }}" 
+        value: "{{ keystore_location }}"
       - operation: replace
         xpath: "Security/KeyStore/Type"
-        value: "{{ keystore_type }}"                 
+        value: "{{ keystore_type }}"
       - operation: replace
         xpath: "Security/KeyStore/Password"
-        value: "{{ keystore_password }}"         
+        value: "{{ keystore_password }}"
       - operation: replace
         xpath: "Security/KeyStore/KeyAlias"
-        value: "{{ keystore_alias }}"   
+        value: "{{ keystore_alias }}"
       - operation: replace
         xpath: "Security/KeyStore/KeyPassword"
         value: "{{ keystore_key_password }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/Location"
-        value: "{{ internal_keystore_location }}" 
+        value: "{{ internal_keystore_location }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/Type"
-        value: "{{ internal_keystore_type }}"                 
+        value: "{{ internal_keystore_type }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/Password"
-        value: "{{ internal_keystore_password }}"         
+        value: "{{ internal_keystore_password }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/KeyAlias"
-        value: "{{ internal_keystore_alias }}"   
+        value: "{{ internal_keystore_alias }}"
       - operation: replace
         xpath: "Security/InternalKeyStore/KeyPassword"
-        value: "{{ internal_keystore_key_password }}"                
+        value: "{{ internal_keystore_key_password }}"
       - operation: replace
         xpath: "Security/TrustStore/Location"
-        value: "{{ truststore_location }}" 
+        value: "{{ truststore_location }}"
       - operation: replace
         xpath: "Security/TrustStore/Type"
-        value: "{{ truststore_type }}" 
+        value: "{{ truststore_type }}"
       - operation: replace
         xpath: "Security/TrustStore/Password"
-        value: "{{ truststore_password }}" 
+        value: "{{ truststore_password }}"
   - file_path: "roles/integrator/templates/carbon-home/conf/jndi.properties.j2"
     relative_path: "{$arg.wso2ei}/conf/jndi.properties"
     file_type: txt
@@ -571,12 +636,12 @@ files:
     configurations:
       - operation: replace
         xpath: "to/property[@name=\"receiverURL\"]"
-        value: "tcp://{{ analytics_worker_ip }}:7612" 
+        value: "tcp://{{ analytics_worker_ip }}:7612"
   - file_path: "roles/integrator/templates/carbon-home/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml.j2"
     relative_path: "{$arg.wso2ei}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
     file_type: xml
     configurations:
       - operation: replace
         xpath: "to/property[@name=\"receiverURL\"]"
-        value: "tcp://{{ analytics_worker_ip }}:7612" 
+        value: "tcp://{{ analytics_worker_ip }}:7612"
 # Micro-Integrator Profile
