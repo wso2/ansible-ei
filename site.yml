@@ -51,9 +51,3 @@
     - analytics_worker_1
   roles:
     - analytics-worker
-
-- name: Apply msf4j configuration to msf4j nodes
-  hosts:
-    - msf4j_1
-  roles:
-    - msf4j
