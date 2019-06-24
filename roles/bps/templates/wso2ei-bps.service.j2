@@ -3,10 +3,10 @@ Description=WSO2 Enterprise Integrator - Business Process
 After=network.target
 
 [Service]
-ExecStart={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/bin/wso2server.sh start
-ExecStop={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/bin/wso2server.sh stop
-ExecRestart={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/bin/wso2server.sh restart
-PIDFile={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2carbon.pid
+ExecStart={{ carbon_home }}/wso2/business-process/bin/wso2server.sh start
+ExecStop={{ carbon_home }}/wso2/business-process/bin/wso2server.sh stop
+ExecRestart={{ carbon_home }}/wso2/business-process/bin/wso2server.sh restart
+PIDFile={{ carbon_home }}/wso2/business-process/wso2carbon.pid
 User={{ wso2_user }}
 Group={{ wso2_group }}
 Type=forking

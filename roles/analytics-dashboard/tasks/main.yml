@@ -15,19 +15,54 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    - name: "Copy carbon.sh"
-      template:
-        src: "carbon-home/wso2/analytics/wso2/dashboard/bin/carbon.sh.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/wso2/dashboard/bin/carbon.sh"
+    # Set installation directory information
+    - name: Installation Information
+      set_fact:
+        product_dir: "{{ target }}/analytics-dashboard"
+        carbon_home: "{{ target }}/analytics-dashboard/{{ product_name }}-{{ product_version }}"
 
-    - name: "Copy deployment.yml"
+    # WSO2 Distribution
+    - name: Create product directory
+      file:
+        path: "{{ product_dir }}"
+        state: directory
+        mode: 0755
+
+    - name: Copy wso2ei-analytics-dashboard service file
       template:
-        src: "carbon-home/wso2/analytics/conf/dashboard/deployment.yaml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/conf/dashboard/deployment.yaml.j2"
+        src: wso2ei-analytics-dashboard.service.j2
+        dest: /etc/systemd/system/wso2ei-analytics-dashboard.service
+
+    - name: Stop wso2ei-analytics-dashboard as a service
+      systemd:
+        name: wso2ei-analytics-dashboard
+        state: stopped
+
+    - name: Remove existing setup
+      file:
+        path: "{{ carbon_home }}"
+        state: absent
+
+    - name: Unzip WSO2 Enterprise Integrator Package
+      unarchive:
+        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+        dest: "{{ product_dir }}"
+        mode: u=rw,g=r,o=r
+
+#    - name: Copy JDBC Driver
+#      copy:
+#       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+#       dest: "{{ carbon_home }}/repository/components/lib"
+
+    - name: Copy configuration templates
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ config_files }}"
 
     - name: Change the owner of WSO2 directory
       file:
-        path: "{{ setup_path }}"
+        path: "{{ target }}"
         state: directory
         recurse: true
         owner: "{{ wso2_user }}"
@@ -43,16 +78,11 @@
       # - import_tasks: custom.yml
 
   - block:
-    - name: "Copy wso2ei-analytics-dashboard service file"
-      template:
-        src: wso2ei-analytics-dashboard.service.j2
-        dest: /etc/systemd/system/wso2ei-analytics-dashboard.service
-
-    - name: "Reload systemctl daemon"
-      command: systemctl daemon-reload
-
-    - name: "Start wso2ei-analytics-dashboard as a service"
-      command: systemctl start wso2ei-analytics-dashboard.service
+    - name: Start wso2ei-analytics-dashboard as a service
+      systemd:
+        name: wso2ei-analytics-dashboard
+        state: started
+        daemon_reload: yes
 
     become: true
     become_user: root

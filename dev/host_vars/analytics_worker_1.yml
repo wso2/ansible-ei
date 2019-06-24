@@ -53,3 +53,10 @@ securevault_masterkeyreader_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/ma
 # Cluster configurations
 cluster_config_enabled: false
 # Please add the necessary elements for clustering here.
+
+# List of configuration file templates, and the paths they should be written to
+config_files:
+  - { src: 'carbon-home/wso2/analytics/wso2/worker/bin/carbon.sh.j2',
+      dest: '{{ carbon_home }}/wso2/analytics/wso2/worker/bin/carbon.sh' }
+  - { src: 'carbon-home/wso2/analytics/conf/worker/deployment.yaml.j2',
+      dest: '{{ carbon_home }}/wso2/analytics/conf/worker/deployment.yaml' }
