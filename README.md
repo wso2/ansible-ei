@@ -8,7 +8,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 ## Supported Ansible Versions
 
-- Ansible 2.6.2
+- Ansible 2.8.0
 
 ## Directory Structure
 ```
@@ -27,7 +27,12 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 ├── docs
 │   └── images
 ├── files
-│   └── mysql-connector-java-5.1.45-bin.jar
+│   ├── lib
+│   │   ├── amazon-corretto-8.202.08.2-linux-x64.tar.gz
+│   │   └── mysql-connector-java-5.1.47-bin.jar
+│   └── packs
+│       ├── wso2is-5.8.0.zip
+│       └── wso2is-analytics-5.8.0.zip
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
@@ -132,15 +137,22 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │           │                   ├── MessageFlowConfigurationPublisher.xml.j2
 │           │                   └── MessageFlowStatisticsPublisher.xml.j2
 │           └── wso2ei-integrator.service.j2
+├── scripts
+│   ├── update.sh
+│   └── update_README.md
 └── site.yml
 ```
 
 ## Packs to be Copied
 
-Copy the following files to `files` directory.
+Copy the following files to `files/packs` directory.
 
 1. [WSO2 Enterprise Integrator 6.5.0 package](https://wso2.com/integration/install/)
-2. [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/5.1.html)
+
+Copy the following files to `files/lib` directory.
+
+1. [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/5.1.html)
+2. [Amazon Coretto for Linux x64 JDK](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html)
 
 ## Running WSO2 Enterprise Integrator Ansible scripts
 
