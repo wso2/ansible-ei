@@ -15,49 +15,54 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    - name: "Copy wso2server.sh"
-      template:
-        src: "carbon-home/wso2/business-process/bin/wso2server.sh.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/bin/wso2server.sh"
+    # Set installation directory information
+    - name: Installation Information
+      set_fact:
+        product_dir: "{{ target }}/bps"
+        carbon_home: "{{ target }}/bps/{{ product_name }}-{{ product_version }}"
 
-    - name: "Copy axis2.xml"
-      template:
-        src: "carbon-home/wso2/business-process/conf/axis2/axis2.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/conf/axis2/axis2.xml"
+    # WSO2 Distribution
+    - name: Create product directory
+      file:
+        path: "{{ product_dir }}"
+        state: directory
+        mode: 0755
 
-    - name: "Copy carbon.xml"
+    - name: Copy wso2ei-business-process service file
       template:
-        src: "carbon-home/wso2/business-process/conf/carbon.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/conf/carbon.xml"
+        src: wso2ei-bps.service.j2
+        dest: /etc/systemd/system/wso2ei-bps.service
 
-    - name: "Copy registry.xml"
-      template:
-        src: "carbon-home/wso2/business-process/conf/registry.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/conf/registry.xml"
+    - name: Stop wso2ei-business-process as a service
+      systemd:
+        name: wso2ei-bps
+        state: stopped
 
-    - name: "Copy user-mgt.xml"
-      template:
-        src: "carbon-home/wso2/business-process/conf/user-mgt.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/conf/user-mgt.xml"
+    - name: Remove existing setup
+      file:
+        path: "{{ carbon_home }}"
+        state: absent
 
-    - name: "Copy activiti-datasources.xml"
-      template:
-        src: "carbon-home/wso2/business-process/conf/datasources/activiti-datasources.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/conf/datasources/activiti-datasources.xml"
+    - name: Unzip WSO2 Enterprise Integrator Package
+      unarchive:
+        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+        dest: "{{ product_dir }}"
+        mode: u=rw,g=r,o=r
 
-    - name: "Copy bps-datasources.xml"
-      template:
-        src: "carbon-home/wso2/business-process/conf/datasources/bps-datasources.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/conf/datasources/bps-datasources.xml"
+#    - name: Copy JDBC Driver
+#      copy:
+#       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+#       dest: "{{ carbon_home }}/repository/components/lib"
 
-    - name: "Copy master-datasources.xml"
+    - name: Copy configuration templates
       template:
-        src: "carbon-home/wso2/business-process/conf/datasources/master-datasources.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/business-process/conf/datasources/master-datasources.xml"
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ config_files }}"
 
     - name: Change the owner of WSO2 directory
       file:
-        path: "{{ setup_path }}"
+        path: "{{ target }}"
         state: directory
         recurse: true
         owner: "{{ wso2_user }}"
@@ -73,16 +78,11 @@
       # - import_tasks: custom.yml
 
   - block:
-    - name: "Copy wso2ei-business-process service file"
-      template:
-        src: wso2ei-bps.service.j2
-        dest: /etc/systemd/system/wso2ei-bps.service
-
-    - name: "Reload systemctl daemon"
-      command: systemctl daemon-reload
-
-    - name: "Start wso2ei-business-process as a service"
-      command: systemctl start wso2ei-bps.service
+    - name: Start wso2ei-business-process as a service
+      systemd:
+        name: wso2ei-bps
+        state: started
+        daemon_reload: yes
 
     become: true
     become_user: root

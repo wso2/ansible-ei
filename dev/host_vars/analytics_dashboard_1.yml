@@ -40,3 +40,10 @@ listener_configurations_port: 9643
 listener_configurations_keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
 listener_configurations_keystore_password: wso2carbon
 listener_configurations_keystore_cert_password: wso2carbon
+
+# List of configuration file templates, and the paths they should be written to
+config_files:
+  - { src: 'carbon-home/wso2/analytics/wso2/dashboard/bin/carbon.sh.j2',
+      dest: '{{ carbon_home }}/wso2/analytics/wso2/dashboard/bin/carbon.sh' }
+  - { src: 'carbon-home/wso2/analytics/conf/dashboard/deployment.yaml.j2',
+      dest: '{{ carbon_home }}/wso2/analytics/conf/dashboard/deployment.yaml' }

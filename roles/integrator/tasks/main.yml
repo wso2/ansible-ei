@@ -15,64 +15,54 @@
 #----------------------------------------------------------------------------
 ---
   - block:
-    - name: "Copy integrator.sh"
-      template:
-        src: "carbon-home/bin/integrator.sh.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/integrator.sh"
+    # Set installation directory information
+    - name: Installation Information
+      set_fact:
+        product_dir: "{{ target }}/integrator"
+        carbon_home: "{{ target }}/integrator/{{ product_name }}-{{ product_version }}"
 
-    - name: "Copy axis2.xml"
-      template:
-        src: "carbon-home/conf/axis2/axis2.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/axis2/axis2.xml"
+    # WSO2 Distribution
+    - name: Create product directory
+      file:
+        path: "{{ product_dir }}"
+        state: directory
+        mode: 0755
 
-    - name: "Copy carbon.xml"
+    - name: Copy wso2ei-integrator service file
       template:
-        src: "carbon-home/conf/carbon.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/carbon.xml"
+        src: wso2ei-integrator.service.j2
+        dest: /etc/systemd/system/wso2ei-integrator.service
 
-    - name: "Copy registry.xml"
-      template:
-        src: "carbon-home/conf/registry.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/registry.xml"
+    - name: Stop wso2ei-integrator as a service
+      systemd:
+        name: wso2ei-integrator
+        state: stopped
 
-    - name: "Copy user-mgt.xml"
-      template:
-        src: "carbon-home/conf/user-mgt.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/user-mgt.xml"
+    - name: Remove existing setup
+      file:
+        path: "{{ carbon_home }}"
+        state: absent
 
-    - name: "Copy jndi.properties"
-      template:
-        src: "carbon-home/conf/jndi.properties.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/jndi.properties.xml"
+    - name: Unzip WSO2 Enterprise Integrator Package
+      unarchive:
+        src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
+        dest: "{{ product_dir }}"
+        mode: u=rw,g=r,o=r
 
-    - name: "Copy synapse.properties"
-      template:
-        src: "carbon-home/conf/synapse.properties.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/synapse.properties.xml"
+#    - name: Copy JDBC Driver
+#      copy:
+#       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+#       dest: "{{ carbon_home }}/repository/components/lib"
 
-    - name: "Copy master-datasources.xml"
+    - name: Copy configuration templates
       template:
-        src: "carbon-home/conf/datasources/master-datasources.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/datasources/master-datasources.xml"
-
-    - name: "Copy catalina-server.xml"
-      template:
-        src: "carbon-home/conf/tomcat/catalina-server.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/conf/tomcat/catalina-server.xml"
-
-    - name: "Copy MessageFlowConfigurationPublisher.xml"
-      template:
-        src: "carbon-home/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml"
-
-    - name: "Copy MessageFlowStatisticsPublisher.xml"
-      template:
-        src: "carbon-home/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml.j2"
-        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml"
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop: "{{ config_files }}"
 
     - name: Change the owner of WSO2 directory
       file:
-        path: "{{ setup_path }}"
+        path: "{{ target }}"
         state: directory
         recurse: true
         owner: "{{ wso2_user }}"
@@ -88,16 +78,11 @@
       # - import_tasks: custom.yml
 
   - block:
-    - name: "Copy wso2ei-integrator service file"
-      template:
-        src: wso2ei-integrator.service.j2
-        dest: /etc/systemd/system/wso2ei-integrator.service
-
-    - name: "Reload systemctl daemon"
-      command: systemctl daemon-reload
-
-    - name: "Start wso2ei-integrator as a service"
-      command: systemctl start wso2ei-integrator.service
+    - name: Start wso2ei-integrator as a service
+      systemd:
+        name: wso2ei-integrator
+        state: started
+        daemon_reload: yes
 
     become: true
     become_user: root

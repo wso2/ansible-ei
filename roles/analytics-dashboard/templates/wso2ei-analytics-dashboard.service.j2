@@ -3,10 +3,10 @@ Description=WSO2 Enterprise Integrator - Analytics-dashboard
 After=network.target
 
 [Service]
-ExecStart={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/wso2/dashboard/bin/carbon.sh start
-ExecStop={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/wso2/dashboard/carbon.sh stop
-ExecRestart={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/wso2/dashboard/carbon.sh restart
-PIDFile={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/analytics/wso2/dashboard/runtime.pid
+ExecStart={{ carbon_home }}/wso2/analytics/wso2/dashboard/bin/carbon.sh start
+ExecStop={{ carbon_home }}/wso2/analytics/wso2/dashboard/carbon.sh stop
+ExecRestart={{ carbon_home }}/wso2/analytics/wso2/dashboard/carbon.sh restart
+PIDFile={{ carbon_home }}/wso2/analytics/wso2/dashboard/runtime.pid
 User={{ wso2_user }}
 Group={{ wso2_group }}
 Type=forking
