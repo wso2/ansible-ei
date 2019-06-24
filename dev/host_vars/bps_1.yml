@@ -46,3 +46,21 @@ internal_keystore_key_password: wso2carbon
 truststore_location: ${carbon.home}/repository/resources/security/client-truststore.jks
 truststore_type: JKS
 truststore_password: wso2carbon
+
+config_files:
+  - { src: 'carbon-home/wso2/business-process/bin/wso2server.sh.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/bin/wso2server.sh' }
+  - { src: 'carbon-home/wso2/business-process/conf/axis2/axis2.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/axis2/axis2.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/carbon.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/carbon.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/registry.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/registry.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/user-mgt.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/user-mgt.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/datasources/activiti-datasources.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/datasources/activiti-datasources.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/datasources/bps-datasources.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/datasources/bps-datasources.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/datasources/master-datasources.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/datasources/master-datasources.xml' }
