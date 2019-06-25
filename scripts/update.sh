@@ -196,7 +196,7 @@ then
   while read -r line; do
     filepath=${line##*${pack}/}
 
-    for module in "${roles[@]}"
+    for role in "${roles[@]}"
     do
         template_file=${packs_dir}/../../roles/${role}/templates/carbon-home/${filepath}.j2
         if [[ -f ${template_file} ]]
