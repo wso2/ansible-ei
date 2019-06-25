@@ -31,8 +31,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   │   ├── amazon-corretto-8.202.08.2-linux-x64.tar.gz
 │   │   └── mysql-connector-java-5.1.47-bin.jar
 │   └── packs
-│       ├── wso2is-5.8.0.zip
-│       └── wso2is-analytics-5.8.0.zip
+│       └── wso2ei-6.5.0.zip
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
