@@ -1,0 +1,40 @@
+# ----------------------------------------------------------------------------
+#  Copyright (c) 2019 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+# ----------------------------------------------------------------------------
+
+# List of configuration file templates, and the paths they should be written to
+config_files:
+  - { src: 'carbon-home/bin/integrator.sh.j2',
+      dest: '{{ carbon_home }}/bin/integrator.sh' }
+  - { src: 'carbon-home/conf/axis2/axis2.xml.j2',
+      dest: '{{ carbon_home }}/conf/axis2/axis2.xml' }
+  - { src: 'carbon-home/conf/carbon.xml.j2',
+      dest: '{{ carbon_home }}/conf/carbon.xml' }
+  - { src: 'carbon-home/conf/registry.xml.j2',
+      dest: '{{ carbon_home }}/conf/registry.xml' }
+  - { src: 'carbon-home/conf/user-mgt.xml.j2',
+      dest: '{{ carbon_home }}/conf/user-mgt.xml' }
+  - { src: 'carbon-home/conf/jndi.properties.j2',
+      dest: '{{ carbon_home }}/conf/jndi.properties' }
+  - { src: 'carbon-home/conf/synapse.properties.j2',
+      dest: '{{ carbon_home }}/conf/synapse.properties' }
+  - { src: 'carbon-home/conf/datasources/master-datasources.xml.j2',
+      dest: '{{ carbon_home }}/conf/datasources/master-datasources.xml' }
+  - { src: 'carbon-home/conf/tomcat/catalina-server.xml.j2',
+      dest: '{{ carbon_home }}/conf/tomcat/catalina-server.xml' }
+  - { src: 'carbon-home/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml.j2',
+      dest: '{{ carbon_home }}/repository/deployment/server/eventpublishers/MessageFlowConfigurationPublisher.xml' }
+  - { src: 'carbon-home/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml.j2',
+      dest: '{{ carbon_home }}/repository/deployment/server/eventpublishers/MessageFlowStatisticsPublisher.xml' }
