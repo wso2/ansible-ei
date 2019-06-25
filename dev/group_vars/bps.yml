@@ -1,0 +1,33 @@
+# ----------------------------------------------------------------------------
+#  Copyright (c) 2019 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+# ----------------------------------------------------------------------------
+
+config_files:
+  - { src: 'carbon-home/wso2/business-process/bin/wso2server.sh.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/bin/wso2server.sh' }
+  - { src: 'carbon-home/wso2/business-process/conf/axis2/axis2.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/axis2/axis2.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/carbon.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/carbon.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/registry.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/registry.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/user-mgt.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/user-mgt.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/datasources/activiti-datasources.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/datasources/activiti-datasources.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/datasources/bps-datasources.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/datasources/bps-datasources.xml' }
+  - { src: 'carbon-home/wso2/business-process/conf/datasources/master-datasources.xml.j2',
+      dest: '{{ carbon_home }}/wso2/business-process/conf/datasources/master-datasources.xml' }

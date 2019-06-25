@@ -46,17 +46,3 @@ internal_keystore_key_password: wso2carbon
 truststore_location: ${carbon.home}/repository/resources/security/client-truststore.jks
 truststore_type: JKS
 truststore_password: wso2carbon
-
-config_files:
-  - { src: 'carbon-home/wso2/broker/bin/wso2server.sh.j2',
-      dest: '{{ carbon_home }}/wso2/broker/bin/wso2server.sh' }
-  - { src: 'carbon-home/wso2/broker/conf/axis2/axis2.xml.j2',
-      dest: '{{ carbon_home }}/wso2/broker/conf/axis2/axis2.xml' }
-  - { src: 'carbon-home/wso2/broker/conf/carbon.xml.j2',
-      dest: '{{ carbon_home }}/wso2/broker/conf/carbon.xml' }
-  - { src: 'carbon-home/wso2/broker/conf/registry.xml.j2',
-      dest: '{{ carbon_home }}/wso2/broker/conf/registry.xml' }
-  - { src: 'carbon-home/wso2/broker/conf/user-mgt.xml.j2',
-      dest: '{{ carbon_home }}/wso2/broker/conf/user-mgt.xml' }
-  - { src: 'carbon-home/wso2/broker/conf/datasources/master-datasources.xml.j2',
-      dest: '{{ carbon_home }}/wso2/broker/conf/datasources/master-datasources.xml' }
