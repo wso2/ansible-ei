@@ -59,7 +59,7 @@ truststore_type: JKS
 truststore_password: wso2carbon
 
 # Configuration to enable mediation flow analytics
-mediation_flow_statistics_enabled: true
-mediation_flow_statistics_tracer_collect_payloads_enabled: true
-mediation_flow_statistics_tracer_collect_properties_enabled: true
-mediation_flow_statistics_collect_all_enabled: true
+mediation_flow_statistics_enabled: false
+mediation_flow_statistics_tracer_collect_payloads_enabled: false
+mediation_flow_statistics_tracer_collect_properties_enabled: false
+mediation_flow_statistics_collect_all_enabled: false
