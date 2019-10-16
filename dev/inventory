@@ -4,6 +4,12 @@ analytics_worker_1 ansible_host=[ip_address] ansible_user=[ssh_user]
 # Example
 # analytics_worker_1 ansible_host=172.28.128.13 ansible_user=vagrant
 
+[analytics-dashboard]
+
+analytics_dashboard_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# analytics_worker_1 ansible_host=172.28.128.14 ansible_user=vagrant
+
 [bps]
 
 bps_1 ansible_host=[ip_address] ansible_user=[ssh_user]
@@ -22,14 +28,10 @@ integrator_1 ansible_host=[ip_address] ansible_user=[ssh_user]
 # Example
 # integrator_1 ansible_host=172.28.128.10 ansible_user=vagrant
 
-[ei]
-
-analytics_dashboard_1 ansible_host=[ip_address] ansible_user=[ssh_user]
-# Example
-# analytics_dashboard_1 ansible_host=172.28.128.13 ansible_user=vagrant
 
 [ei:children]
 analytics-worker
+analytics-dashboard
 bps
 broker
 integrator

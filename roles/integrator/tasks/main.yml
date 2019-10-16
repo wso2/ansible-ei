@@ -20,6 +20,7 @@
       set_fact:
         product_dir: "{{ target }}/integrator"
         carbon_home: "{{ target }}/integrator/{{ product_name }}-{{ product_version }}"
+        carbon_server_backup_dir: "{{ backup_dir }}/ei-{{ '%Y-%m-%d' | strftime }}"
 
     # WSO2 Distribution
     - name: Create product directory
@@ -37,6 +38,15 @@
       systemd:
         name: wso2ei-integrator
         state: stopped
+
+    - name: Check if carbon home directory exists
+      stat:
+        path: "{{ carbon_home }}"
+      register: carbon_home_dir
+
+    - name: Backup the existing pack
+      command: cp -r "{{ carbon_home }}/." "{{ carbon_server_backup_dir }}/"
+      when: carbon_home_dir.stat.isdir is defined and carbon_home_dir.stat.isdir and backup_enabled is defined
 
     - name: Remove existing setup
       file:
