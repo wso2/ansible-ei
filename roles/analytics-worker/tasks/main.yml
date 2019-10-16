@@ -72,6 +72,7 @@
       copy:
        src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
        dest: "{{ carbon_home }}/wso2/analytics/lib"
+    when: jdbc_driver is defined
 
     - name: Copy configuration templates
       template:
@@ -89,7 +90,12 @@
         mode: 0755
 
 # Enable customization by uncommenting the following and adding the changes to the custom.yml
-    - import_tasks: custom.yml
+      # - import_tasks: custom.yml
+
+    - name: "Copy jar to bundle script"
+      template:
+        src: "{{ product_package_location }}/misc/jartobundle.sh"
+        dest: "{{ carbon_home }}/wso2/analytics/bin"
 
     - name: Run jar to bundle script
       command: "sh {{ carbon_home }}/wso2/analytics/bin/jartobundle.sh {{ carbon_home
