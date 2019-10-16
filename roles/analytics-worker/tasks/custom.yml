@@ -15,3 +15,7 @@
 #----------------------------------------------------------------------------
 
 # Add configs for the custom files that are needed to be copied/replaced here.
+ - name: "Copy jar to bundle script"
+   template:
+     src: "{{ product_package_location }}/misc/jartobundle.sh"
+     dest: "{{ carbon_home }}/wso2/analytics/bin"

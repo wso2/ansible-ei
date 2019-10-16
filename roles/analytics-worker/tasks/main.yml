@@ -20,6 +20,7 @@
       set_fact:
         product_dir: "{{ target }}/analytics-worker"
         carbon_home: "{{ target }}/analytics-worker/{{ product_name }}-{{ product_version }}"
+        carbon_server_backup_dir: "{{ backup_dir }}/ei-analytics-worker-{{ '%Y-%m-%d' | strftime }}"
 
     # WSO2 Distribution
     - name: Create product directory
@@ -37,6 +38,15 @@
       systemd:
         name: wso2ei-analytics-worker
         state: stopped
+
+    - name: Check if carbon home directory exists
+      stat:
+        path: "{{ carbon_home }}"
+      register: carbon_home_dir
+
+    - name: Backup the existing pack
+      command: cp -r "{{ carbon_home }}/." "{{ carbon_server_backup_dir }}/"
+      when: carbon_home_dir.stat.isdir is defined and carbon_home_dir.stat.isdir and backup_enabled is defined
 
     - name: Remove existing setup
       file:
@@ -58,10 +68,10 @@
         remote_src: yes
       when: pack_location == "remote"
 
-#    - name: Copy JDBC Driver
-#      copy:
-#       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
-#       dest: "{{ carbon_home }}/repository/components/lib"
+    - name: Copy JDBC Driver to Analytics folder
+      copy:
+       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
+       dest: "{{ carbon_home }}/wso2/analytics/lib"
 
     - name: Copy configuration templates
       template:
@@ -77,6 +87,21 @@
         owner: "{{ wso2_user }}"
         group: "{{ wso2_group }}"
         mode: 0755
+
+# Enable customization by uncommenting the following and adding the changes to the custom.yml
+    - import_tasks: custom.yml
+
+    - name: Run jar to bundle script
+      command: "sh {{ carbon_home }}/wso2/analytics/bin/jartobundle.sh {{ carbon_home
+      }}/wso2/analytics/lib/{{jdbc_driver }} {{ carbon_home }}/wso2/analytics/lib"
+      environment:
+        JAVA_HOME: "{{java_home}}"
+      when: jdbc_driver is defined
+
+    - name: Remove default database connector jar file
+      file:
+        path: "{{ carbon_home }}/wso2/analytics/lib/{{jdbc_driver}}"
+        state: absent
 
     when: "(inventory_hostname in groups['ei'])"
     become: true

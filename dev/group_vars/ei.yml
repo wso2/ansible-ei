@@ -21,6 +21,10 @@ product_version: 6.5.0
 target: /mnt
 product_package_location: files
 jdbc_driver: mysql-connector-java-5.1.47-bin.jar
+backup_dir: /tmp
+java_xms: 256
+java_xmx: 1024
+java_max_perm_size: 256
 
 # Performance tuning configurations
 enable_performance_tuning: true
@@ -37,7 +41,7 @@ pack_location: local
 #remote_pack: "<URL_TO_EI_PACK>"
 
 # JDK Distributions
-jdk_name: amazon-corretto-8.202.08.2-linux-x64
+jdk_name: amazon-corretto-8.222.10.1-linux-x64
 java_dir: /opt
 java_symlink: "{{ java_dir }}/java"
 java_home: "{{ java_dir }}/{{ jdk_name }}"
@@ -99,6 +103,18 @@ wso2_mb_store_db_url: jdbc:h2:repository/database/WSO2MB_DB;DB_CLOSE_ON_EXIT=FAL
 wso2_mb_store_db_username: wso2carbon
 wso2_mb_store_db_password: wso2carbon
 wso2_mb_store_db_driver_class_name: org.h2.Driver
+
+wso2um_db_driver: org.h2.Driver
+wso2um_db_url: jdbc:h2:repository/database/WSO2UM_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
+wso2um_db_username: wso2carbon
+wso2um_db_password: wso2carbon
+wso2um_db_validation_query: SELECT 1
+
+wso2reg_db_driver: org.h2.Driver
+wso2reg_db_url: jdbc:h2:repository/database/WSO2EIREG_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000
+wso2reg_db_username: wso2carbon
+wso2reg_db_password: wso2carbon
+wso2reg_db_validation_query: SELECT 1
 
 # Add any new changes you want to add for the group/profile below.
 # If you add a new file under templates and parameterized the file, the values for those parameters should be added
