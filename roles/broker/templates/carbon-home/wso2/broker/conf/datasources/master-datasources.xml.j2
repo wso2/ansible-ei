@@ -48,7 +48,7 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:h2:repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
+                    <url>jdbc:h2:./repository/database/WSO2CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
                     <username>wso2carbon</username>
                     <password>wso2carbon</password>
                     <driverClassName>org.h2.Driver</driverClassName>
@@ -73,14 +73,35 @@
                 <configuration>
                     <url>{{ wso2_mb_store_db_url }}</url>
                     <username>{{ wso2_mb_store_db_username }}</username>
-                    <password>{{ wso2_mb_store_db_password }}</password>
-                    <driverClassName>{{ wso2_mb_store_db_driver_class_name }}</driverClassName>
+                    <password>{{ wso2_shared_db_password }}</password>
+                    <driverClassName>{{ wso2_shared_db_driver_class_name }}</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
                     <validationQuery>SELECT 1</validationQuery>
                     <validationInterval>30000</validationInterval>
                     <defaultAutoCommit>false</defaultAutoCommit>
+                </configuration>
+            </definition>
+        </datasource>
+
+        <datasource>
+            <name>WSO2_SHARED_DB</name>
+            <description>Shared Database for user and registry data</description>
+            <jndiConfig>
+                <name>jdbc/SHARED_DB</name>
+            </jndiConfig>
+            <definition type="RDBMS">
+                <configuration>
+                    <url>{{ wso2_shared_db_url }}</url>
+                    <username>{{ wso2_shared_db_username }}</username>
+                    <password>{{ wso2_shared_db_password }}</password>
+                    <driverClassName>{{ wso2_shared_db_driver_class_name }}</driverClassName>
+                    <maxActive>50</maxActive>
+                    <maxWait>60000</maxWait>
+                    <testOnBorrow>true</testOnBorrow>
+                    <validationInterval>30000</validationInterval>
+                    <defaultAutoCommit>true</defaultAutoCommit>
                 </configuration>
             </definition>
         </datasource>
