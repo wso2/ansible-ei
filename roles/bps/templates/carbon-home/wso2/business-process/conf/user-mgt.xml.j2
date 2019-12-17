@@ -24,7 +24,7 @@
                 <Password>admin</Password>
             </AdminUser>
             <EveryOneRoleName>everyone</EveryOneRoleName> <!-- By default users in this role sees the registry root -->
-            !-- Enable username claim retrieve from the UM_USER_NAME in JDBC datasources -->
+             <!--Enable username claim retrieve from the UM_USER_NAME in JDBC datasources-->
             <OverrideUsernameClaimFromInternalUsername>true</OverrideUsernameClaimFromInternalUsername>
             <Property name="isCascadeDeleteEnabled">true</Property>
             <Property name="dataSource">jdbc/WSO2CarbonDB</Property>
@@ -64,7 +64,7 @@
             <Property name="UserNameUniqueAcrossTenants">false</Property>
             <Property name="LeadingOrTrailingSpaceAllowedInUserName">false</Property>
         </UserStoreManager>
-	
+
 	    <!-- If product is using an external LDAP as the user store in READ ONLY mode, use following user manager.
 		     In case if user core cache domain is needed to identify uniquely set property
 		     <Property name="UserCoreCacheIdentifier">domain</Property>
@@ -101,8 +101,9 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
             <Property name="ReplaceEscapeCharactersAtUserLogin">true</Property>
+            <Property name="ConnectionRetryDelay">120000</Property>
         </UserStoreManager-->
-	
+
 	    <!-- Active directory configuration is as follows.
 	         In case if user core cache domain is needed to identify uniquely set property
 	         <Property name="UserCoreCacheIdentifier">domain</Property>
@@ -115,7 +116,7 @@
 	    -->
         <!--UserStoreManager class="org.wso2.carbon.user.core.ldap.ActiveDirectoryUserStoreManager">
             <Property name="TenantManager">org.wso2.carbon.user.core.tenant.CommonHybridLDAPTenantManager</Property>
-            <Property name="ConnectionURL">ldaps://10.100.1.100:636</Property> 
+            <Property name="ConnectionURL">ldaps://10.100.1.100:636</Property>
             <Property name="ConnectionName">CN=admin,CN=Users,DC=WSO2,DC=Com</Property>
             <Property name="ConnectionPassword">A1b2c3d4</Property>
             <Property name="AnonymousBind">false</Property>
@@ -151,8 +152,8 @@
             <Property name="MultiAttributeSeparator">,</Property>
             <Property name="isADLDSRole">false</Property>
             <Property name="userAccountControl">512</Property>
-            <Property name="MaxUserNameListLength">100</Property>     
-            <Property name="MaxRoleNameListLength">100</Property>                     
+            <Property name="MaxUserNameListLength">100</Property>
+            <Property name="MaxRoleNameListLength">100</Property>
             <Property name="MembershipAttributeRange">1500</Property>
             <Property name="kdcEnabled">false</Property>
             <Property name="defaultRealmName">WSO2.ORG</Property>
@@ -162,6 +163,7 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
             <Property name="StartTLSEnabled">false</Property>
+            <Property name="ConnectionRetryDelay">120000</Property>
         </UserStoreManager-->
 
         <!-- Following user manager is used by Identity Server (IS) as its default user manager.
@@ -215,6 +217,7 @@
             <Property name="ReadTimeout"/>
             <Property name="RetryAttempts"/>
             <Property name="StartTLSEnabled">false</Property>
+            <Property name="ConnectionRetryDelay">120000</Property>
         </ISUserStoreManager-->
 
         <AuthorizationManager class="org.wso2.carbon.user.core.authorization.JDBCAuthorizationManager">
