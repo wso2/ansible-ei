@@ -62,13 +62,13 @@
     <parameter name="ModulesDirectory">axis2modules</parameter>
 
     <!-- User agent and the server details to be used in the http communication -->
-    <parameter name="userAgent" locked="true">WSO2 EI 6.4.0</parameter>
-    <parameter name="server" locked="true">WSO2 EI 6.4.0</parameter>
+    <parameter name="userAgent" locked="true">WSO2 EI 6.6.0</parameter>
+    <parameter name="server" locked="true">WSO2 EI 6.6.0</parameter>
 
     <!-- During a fault, stacktrace can be sent with the fault message. The following flag -->
     <!-- will control that behaviour -->
     <parameter name="sendStacktraceDetailsWithFaults" locked="false">false</parameter>
-    
+
     <!-- If there aren't any information available to find out the fault reason, we set the -->
     <!-- message of the exception as the faultreason/Reason. But when a fault is thrown from -->
     <!-- a service or some where, it will be wrapped by different levels. Due to this the -->
@@ -187,7 +187,7 @@
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
         <!--messageFormatter contentType="text/xml"
                         class="org.wso2.carbon.relay.ExpandingMessageFormatter"/-->
-	    <!--messageFormatter contentType="x-application/hessian"
+      <!--messageFormatter contentType="x-application/hessian"
                          class="org.apache.synapse.format.hessian.HessianMessageFormatter"/-->
         <!--messageFormatter contentType=""
                          class="org.apache.synapse.format.hessian.HessianMessageFormatter"/-->
@@ -216,7 +216,7 @@
         <!--JSON Message Builders-->
         <messageBuilder contentType="application/json"
                         class="org.wso2.carbon.integrator.core.json.JsonStreamBuilder"/>
-	    <!--messageBuilder contentType="application/xml"
+      <!--messageBuilder contentType="application/xml"
                         class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
         <!--messageBuilder contentType="application/x-www-form-urlencoded"
                         class="org.wso2.carbon.relay.BinaryRelayBuilder"/-->
@@ -279,7 +279,7 @@
 
     <transportReceiver name="local" class="org.wso2.carbon.core.transports.local.CarbonLocalTransportReceiver"/>
 
-    <!--<transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>-->
+    <transportReceiver name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportListener"/>
 
     <!--<transportReceiver name="mailto" class="org.apache.axis2.transport.mail.MailTransportListener">-->
         <!-- configure any optional POP3/IMAP properties
@@ -289,24 +289,24 @@
     <!--Uncomment this and configure as appropriate for JMS transport support, after setting up your JMS environment (e.g. ActiveMQ)
     <transportReceiver name="jms" class="org.apache.axis2.transport.jms.JMSListener">
         <parameter name="myTopicConnectionFactory" locked="false">
-        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
-		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
+          <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+          <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+          <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">TopicConnectionFactory</parameter>
+        <parameter name="transport.jms.ConnectionFactoryType" locked="false">topic</parameter>
         </parameter>
 
         <parameter name="myQueueConnectionFactory" locked="false">
-        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+          <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+          <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+          <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+        <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
 
         <parameter name="default" locked="false">
-        	<parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
-        	<parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
-        	<parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
-		    <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
+          <parameter name="java.naming.factory.initial" locked="false">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
+          <parameter name="java.naming.provider.url" locked="false">tcp://localhost:61616</parameter>
+          <parameter name="transport.jms.ConnectionFactoryJNDIName" locked="false">QueueConnectionFactory</parameter>
+        <parameter name="transport.jms.ConnectionFactoryType" locked="false">queue</parameter>
         </parameter>
     </transportReceiver>-->
 
@@ -361,7 +361,7 @@
     <!--Uncomment this for FIX transport support
     <transportReceiver name="fix" class="org.apache.synapse.transport.fix.FIXTransportListener"/>
     -->
-    
+
     <!--transportReceiver name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportListener"/-->
 
     <!-- SAP Transport Listeners -->
@@ -431,7 +431,7 @@
    <!-- uncomment this and configure to use connection pools for sending messages>
      <transportSender name="jms" class="org.apache.axis2.transport.jms.JMSSender"/-->
 
-    <!--transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/-->
+    <transportSender name="vfs" class="org.apache.synapse.transport.vfs.VFSTransportSender"/>
 
     <!-- Uncomment and configure the SMTP server information
     check com.sun.mail.smtp package documentation for descriptions of properties
@@ -448,7 +448,7 @@
     <!--Uncomment this for FIX transport support
     <transportSender name="fix" class="org.apache.synapse.transport.fix.FIXTransportSender"/>
     -->
-    
+
     <!--transportSender name="hl7" class="org.wso2.carbon.business.messaging.hl7.transport.HL7TransportSender"/-->
 
     <!-- SAP Transport Senders -->
@@ -459,12 +459,12 @@
     <transportSender name="rabbitmq" class="org.apache.axis2.transport.rabbitmq.RabbitMQSender"/-->
 
     <!--<transportSender name="mqtt" class="org.apache.axis2.transport.mqtt.MqttSender"/>-->
-    
+
     <!--<transportSender name="ws" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
         <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
-        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>       
+        <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
     </transportSender>-->
-    
+
     <!--<transportSender name="wss" class="org.wso2.carbon.websocket.transport.WebsocketTransportSender">
         <parameter name="ws.outflow.dispatch.sequence" locked="false">outflowDispatchSeq</parameter>
         <parameter name="ws.outflow.dispatch.fault.sequence" locked="false">outflowFaultSeq</parameter>
@@ -579,13 +579,13 @@
         <parameter name="properties">
             <property name="backendServerURL" value="https://${hostName}:${httpsPort}/services/"/>
             <property name="mgtConsoleURL" value="https://${hostName}:${httpsPort}/"/>
- 	    <!-- Manger Setup with Port Mapping-->
-	    <!--property name="port.mapping.8280" value="9764"/>
+      <!-- Manger Setup with Port Mapping-->
+      <!--property name="port.mapping.8280" value="9764"/>
             <property name="port.mapping.8243" value="9444"/>
             <property name="subDomain" value="mgt"/-->
 
-	    <!-- Worker Setup-->
-	    <!--property name="subDomain" value="worker"/-->
+      <!-- Worker Setup-->
+      <!--property name="subDomain" value="worker"/-->
         </parameter>
 
         <!--
@@ -618,7 +618,7 @@
     <!-- ================================================= -->
 
     <!--
-        Uncomment and configure the following section to enable transactions support 
+        Uncomment and configure the following section to enable transactions support
     -->
     <!--<transaction timeout="30000">
         <parameter name="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</parameter>
@@ -641,9 +641,9 @@
            NOTE: This should be the very first phase in this flow
         -->
         <phase name="MsgInObservation">
-	    <handler name="TraceMessageBuilderDispatchHandler"
+      <handler name="TraceMessageBuilderDispatchHandler"
                      class="org.apache.synapse.transport.passthru.util.TraceMessageBuilderDispatchHandler"/>
-	</phase>
+  </phase>
         <phase name="Validation"/>
         <phase name="Transport">
             <handler name="IntegratorStatefulHandler" class="org.wso2.carbon.integrator.core.handler.IntegratorStatefulHandler">
@@ -651,7 +651,7 @@
                 <handler name="JSONMessageHandler"
                          class="org.apache.axis2.json.gson.JSONMessageHandler" />
             </handler>
-   	        <handler name="CarbonContextConfigurator"
+            <handler name="CarbonContextConfigurator"
                      class="org.wso2.carbon.mediation.initializer.handler.CarbonContextConfigurator"/>
             <handler name="RelaySecuirtyMessageBuilderDispatchandler"
                      class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler"/>
@@ -716,9 +716,9 @@
         <!--these phase will run irrespective of the service-->
         <phase name="PolicyDetermination"/>
         <phase name="PTSecurityOutPhase">
-		<handler name="RelaySecuirtyMessageBuilderDispatchandler"
+    <handler name="RelaySecuirtyMessageBuilderDispatchandler"
                      class="org.apache.synapse.transport.passthru.util.RelaySecuirtyMessageBuilderDispatchandler"/>
-	    </phase>
+      </phase>
         <phase name="MessageOut"/>
         <phase name="Security"/>
 
@@ -791,7 +791,7 @@
         <phase name="PolicyDetermination"/>
         <phase name="MessageOut"/>
         <phase name="Security"/>
-	<phase name="Transport"/>
+  <phase name="Transport"/>
         <!--
            The MsgOutObservation phase is used to observe messages just before the
            responses are sent out. In this phase, we could do some things such as SOAP message
