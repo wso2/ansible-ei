@@ -28,10 +28,10 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   └── images
 ├── files
 │   ├── lib
-│   │   ├── amazon-corretto-8.202.08.2-linux-x64.tar.gz
+│   │   ├── amazon-corretto-11.0.5.10.1-linux-x64.tar.gz
 │   │   └── mysql-connector-java-5.1.47-bin.jar
 │   └── packs
-│       └── wso2ei-6.5.0.zip
+│       └── wso2ei-6.6.0.zip
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
@@ -146,12 +146,12 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 Copy the following files to `files/packs` directory.
 
-1. [WSO2 Enterprise Integrator 6.5.0 package](https://wso2.com/integration/install/)
+1. [WSO2 Enterprise Integrator 6.6.0 package](https://wso2.com/integration/install/)
 
 Copy the following files to `files/lib` directory.
 
 1. [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/5.1.html)
-2. [Amazon Coretto for Linux x64 JDK](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html)
+2. [Amazon Coretto for Linux x64 JDK](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html)
 
 ## Running WSO2 Enterprise Integrator Ansible scripts
 
