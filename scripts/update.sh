@@ -22,7 +22,7 @@
 set -e
 
 # Build artifacts and versions
-: ${version:="6.5.0"}
+: ${version:="6.6.0"}
 : ${pack:="wso2ei-"${version}}
 : ${packs_dir:=$(pwd)/../files/packs/}
 : ${carbon_home=${packs_dir}/${pack}}

@@ -4,11 +4,6 @@ The update script is to be used by WSO2 subscription users such that products pa
 
 ### Prequisites
 * A WSO2 Subscription
-* [WUM](https://wso2.com/updates/wum) updated packs should be provided in the `/files/packs` directory
-
-`
-NOTE: Provided WUM updated packs should contain the latest updates for wso2ei-6.5.0.
-`
 
 ### Usage
 While executing the update script, provide the profile name. The pack corresponding to the profile will begin updating.
