@@ -23,9 +23,7 @@ set -e
 
 # Build artifacts and versions
 : ${version:="6.6.0"}
-: ${pack:="wso2ei-"${version}}
-: ${packs_dir:=$(pwd)/../files/packs/}
-: ${carbon_home=${packs_dir}/${pack}}
+: ${packs_dir:=$(pwd)/../files/packs}
 
 usage() { echo "Usage: $0 -p <profile_name>" 1>&2; exit 1; }
 
@@ -49,6 +47,22 @@ update_pack() {
     echo "Repackaging ${1}..."
     zip -qr ${1}.zip ${1}
     rm -rf ${1}
+}
+
+print_conflicts() {
+    conflict_files=$(sed -n '/^Modified/p' ${updates_dir}/output.txt | sed -e 's/.*Conflicts: \[\(.*\)].*/\1/' )
+
+    if [[ ! -z "$conflict_files" ]]
+    then
+      IFS=' '
+      read -a strarr <<< "$conflict_files"
+      for filepath in "${strarr[@]}";
+      do
+        echo ${filepath}
+      done
+
+      echo "Conflicts are found in the above file(s). Please review the above file(s), resolve conflicts, and save with .final extension. Then re-run the update script."
+    fi
 }
 
 while getopts ":p:" o; do
@@ -78,6 +92,9 @@ if [[ ! " ${roles[@]} " =~ " ${role} " ]]; then
     exit 1
 fi
 
+pack="wso2ei-"${version}
+carbon_home=${packs_dir}/${pack}
+
 # Create updates directory if it doesn't exist
 updates_dir=$(pwd)/update_logs/${pack}
 if [[ ! -d ${updates_dir} ]]
@@ -88,7 +105,7 @@ fi
 # Getting update status
 # 0 - first/last update successful
 # 1 - Error occurred in last update
-# 2 - In-place has been updated
+# 2 - Update tool has been updated
 # 3 - conflicts encountered in last update
 status=0
 if [[ -f ${updates_dir}/status ]]
@@ -97,49 +114,24 @@ then
 fi
 
 cd ${packs_dir}
-# Check if user has a WSO2 subscription
-while :
-do
-  read -p "Do you have a WSO2 subscription? (Y/n) "
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z "$REPLY" ]]
+if [[ ${status} -ne 3 ]]
   then
-    # The pack should not be unzipped if a conflict is being resolved
-    if [[ ${status} -ne 3 ]]
-    then
-        unzip_pack ${pack}
-    fi
-
-    if [[ ! -f ${carbon_home}/bin/update_linux ]]
-    then
-      echo "Update executable not found. Please download package for subscription users from website."
-      echo "Don't have a subscription yet? Sign up for a free-trial subscription at https://wso2.com/subscription/free-trial"
-      rm -rf ${packs_dir}/${pack}
-      exit 1
-    else
-      break
-    fi
-  elif [[ $REPLY =~ ^[Nn]$ ]]
-  then
-    echo "Don't have a subscription yet? Sign up for a free-trial subscription at https://wso2.com/subscription/free-trial"
-    exit 0
-  else
-    echo "Invalid input provided."
-    sleep .5
-  fi
-done
+    unzip_pack ${pack}
+fi
 
 # Move into binaries directory
 cd ${carbon_home}/bin
 
-# Run in-place update
+# Run update
+echo "Running update tool. This may take up to 5 minutes"
 if [[ ${status} -eq 0 ]] || [[ ${status} -eq 1 ]] || [[ ${status} -eq 2 ]]
 then
-  ./update_linux --verbose 2>&1 | tee ${updates_dir}/output.txt
+  ./wso2update_linux --template "Modified: {{.Modified}}, Conflicts: {{.Conflicts}}" 2>&1 | tee ${updates_dir}/output.txt
   update_status=${PIPESTATUS[0]}
 elif [[ ${status} -eq 3 ]]
 then
-  ./update_linux --verbose --continue 2>&1 | tee ${updates_dir}/output.txt
+  echo "Resolving conflicts"
+  ./wso2update_linux --continue --template "Modified: {{.Modified}}, Conflicts: {{.Conflicts}}" 2>&1 | tee ${updates_dir}/output.txt
   update_status=${PIPESTATUS[0]}
 
   # Handle user running update script without resolving conflicts
@@ -158,8 +150,8 @@ fi
 # Handle the In-place tool being updated
 if [[ ${update_status} -eq 2 ]]
 then
-    echo "In-place tool has been updated. Running update again."
-    ./update_linux --verbose 2>&1 | tee ${updates_dir}/output.txt
+    echo "Update tool has been updated. Running update again."
+    ./wso2update_linux --template "Modified: {{.Modified}}, Conflicts: {{.Conflicts}}" 2>&1 | tee ${updates_dir}/output.txt
     update_status=${PIPESTATUS[0]}
 fi
 
@@ -172,7 +164,9 @@ then
   update_pack ${pack}
 elif [[ ${update_status} -eq 3 ]]
 then
+  echo ""
   echo "Conflicts encountered. Please resolve conflicts in ${packs_dir}/${pack} and run the update script again."
+  print_conflicts
 else
   echo "Update error occurred. Stopped with exit code ${update_status}"
   rm -rf ${packs_dir}/${pack}
@@ -180,33 +174,31 @@ else
 fi
 
 # Get list of merged files
-if [[ ${update_status} -eq 0 ]] # If update is successful
+if [[ ${update_status} -ne 1 ]] # If update is successful
 then
-  sed -n '/Merge successful for the following files./,/Successfully completed merging files/p' ${updates_dir}/output.txt > ${updates_dir}/merged_files.txt
-elif [[ ${update_status} -eq 3 ]] # If conflicts were encountered during update
-then
-  sed -n '/Merge successful for the following files./,/Merging/p' ${updates_dir}/output.txt > ${updates_dir}/merged_files.txt
+  modified_files=$(sed -n '/^Modified/p' ${updates_dir}/output.txt | sed -e 's/.*Modified: \[\(.*\)], Conflicts.*/\1/')
 fi
 
-if [[ -s ${updates_dir}/merged_files.txt ]]
+if [[ ! -z "$modified_files" ]]
 then
-  sed -i '1d' ${updates_dir}/merged_files.txt # Remove first line from file
-  sed -i '$ d' ${updates_dir}/merged_files.txt # Remove last line from file
-
-  while read -r line; do
+# Get the list of modified files
+  IFS=' '
+  read -a strarr <<< "$modified_files"
+  for line in "${strarr[@]}";
+  do
     filepath=${line##*${pack}/}
 
     for role in "${roles[@]}"
     do
-        template_file=${packs_dir}/../../roles/${role}/templates/carbon-home/${filepath}.j2
-        if [[ -f ${template_file} ]]
-        then
-            updated_templates+=(${template_file##*${packs_dir}/../../})
-        fi
+      template_file=${packs_dir}/../../roles/${role}/templates/carbon-home/${filepath}.j2
+      if [[ -f ${template_file} ]]
+      then
+        updated_templates+=(${template_file##*${packs_dir}/../../})
+      fi
     done
-  done < ${updates_dir}/merged_files.txt
+  done
 
-  # Display template files to be changed
+# Display template files to be changed
   if [[ -n ${updated_templates} ]]
   then
     DATE=`date +%Y-%m-%d`
